@@ -51,6 +51,79 @@ function processPostRequest(req, res) {
 	return res.status(200).send(state);	
 }
 
+
+function  bellCommand(req, res) {
+	const keyValuePairs = req.body.split('|') || [''];
+	const command =   getCommand (keyValuePairs[0]);
+	const deviceId = 'bell' + req.params.id;
+	const result =  keyValuePairs[0] + '| ' + command;
+		
+	
+	if(_.indexOf(myCache.keys(), deviceId) === -1 ||
+		_.indexOf(['ring'], command) === -1 ){
+		return  res.status(422).send(result + ' NOT OK');
+	}
+
+	if (command === 'ring'){
+		myCache.set( deviceId, 's|ON');
+		SOCKET_IO.emit(deviceId, 's|ON');
+	}
+
+	return res.status(200).send(result + ' OK');	
+}
+
+
+function doorCommand(req, res) {
+	const keyValuePairs = req.body.split('|') || [''];
+	const command =   getCommand (keyValuePairs[0]);
+	const deviceId = 'door' + req.params.id;
+	const result =  keyValuePairs[0] + '| ' + command;
+	
+
+	
+	if(_.indexOf(myCache.keys(), deviceId ) === -1 ||
+		_.indexOf(['open', 'close', 'lock', 'unlock'], command) === -1 ){
+		return  res.status(422).send(result + ' NOT OK');
+	}
+
+	
+	if (command == 'open'){
+		myCache.set( deviceId, 's|OPEN');
+	} else if (command == 'close' || command == 'unlock'){
+		myCache.set( deviceId, 's|CLOSED');
+	} else if (command == 'lock'){
+		myCache.set( deviceId, 's|LOCKED');
+	} 
+	return res.status(200).send(result + 'OK');	
+}
+function lampCommand(req, res) {
+	const keyValuePairs = req.body.split('|') || [''];
+	const command =   getCommand (keyValuePairs[0]);
+	const deviceId = 'lamp' + req.params.id;
+	const result =  keyValuePairs[0] + '| ' + command;
+
+	if(_.indexOf(myCache.keys(), deviceId) === -1 ||
+		_.indexOf(['on', 'off'], command) === -1 ){
+		return  res.status(422).send(result + 'NOT OK');
+	}
+
+	if (command == 'on'){
+		myCache.set( deviceId, 's|ON|l|2000');
+	}
+	if (command == 'off'){
+		myCache.set( deviceId, 's|OFF|l|0');
+	}
+	return res.status(200).send(result + ' OK');	
+}
+
+function getCommand (string){
+	const command =  string.split('@');
+	if (command.length === 1){
+		command.push('');
+	}
+	return command[1];
+}
+
 // Set up 16 sensors, a door, bell, motion sensor and lamp for each of 4 locations.
 //
 // The door can be OPEN CLOSED or LOCKED
@@ -69,10 +142,10 @@ function initSensorState (){
 	myCache.set( 'bell003', 's|OFF');
 	myCache.set( 'bell004', 's|OFF');
 
-	myCache.set( 'lamp001', 's|OFF,l|0');
-	myCache.set( 'lamp002', 's|OFF,l|0');
-	myCache.set( 'lamp003', 's|OFF,l|0');
-	myCache.set( 'lamp004', 's|OFF,l|0');
+	myCache.set( 'lamp001', 's|OFF|l|0');
+	myCache.set( 'lamp002', 's|OFF|l|0');
+	myCache.set( 'lamp003', 's|OFF|l|0');
+	myCache.set( 'lamp004', 's|OFF|l|0');
 
 	myCache.set( 'motion001', 'c|0');
 	myCache.set( 'motion002', 'c|0');
@@ -97,20 +170,16 @@ function updateSensorState(res, req, payload){
 // Ultralight is a series of comma separated key-value pairs.
 // Each key and value is in turn separated by a pipe character
 //
-// e.g. s|ON,l|1000 becomes
+// e.g. s|ON|l|1000 becomes
 // { s: 'ON', l: '1000'}
 //
 function toStateObject (ultraLight){
 	const obj = {};
-	const keyValuePairs = ultraLight.split(',')
-	_.forEach(keyValuePairs, function(value) {
-		const splitArr = value.split('|');
+	const keyValuePairs = ultraLight.split('|')
 
-		if (splitArr.length === 2){
-			obj[splitArr[0]] = splitArr[1];
-		}
-
-	});
+	for (var i = 0; i < keyValuePairs.length; i = i + 2) {
+		obj[keyValuePairs[i]] = keyValuePairs[i+ 1];
+	}
 	return obj;
 }
 
@@ -124,7 +193,7 @@ function toUltraLight (object){
 	_.forEach(object, function(value, key) {
 		strArray.push(key + '|' + value);
 	});
-	return strArray.join (',');
+	return strArray.join ('|');
 }
 
 // Return the state of the door with the same number as the current element
@@ -203,4 +272,7 @@ module.exports = {
 	preprocess,
 	processGetRequest,
 	processPostRequest,
+	bellCommand,
+	doorCommand,
+	lampCommand
 };

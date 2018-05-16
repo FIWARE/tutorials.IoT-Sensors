@@ -1,9 +1,10 @@
-![FIWARE Banner](https://fiware.github.io/tutorials.Subscriptions/img/fiware.png)
+![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Sensors//img/fiware.png)
 
 [![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-pink.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 
-This tutorial is an introduction to IoT devices and the usage of the UltraLight 2.O Protocol for constrained
-devices. The tutorial introduces a series of dummy IoT devices  which are displayed within the browser and
+This tutorial is an introduction to IoT devices and the usage of the 
+[UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) Protocol for 
+constrained devices. The tutorial introduces a series of dummy IoT devices  which are displayed within the browser and
 allows a user to interact with them. A complete understanding of all the terms and concepts defined in this
 tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via an IoT Agent. 
 
@@ -13,7 +14,18 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 # Contents
 
-TBD...
+- [What are IoT devices?](#what-are-iot-devices)
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+  * [Docker](#docker)
+  * [Cygwin](#cygwin)
+- [Start Up](#start-up)
+- [Ultralight](#ultralight)
+  * [What is Ultralight 2.0?](#what-is-ultralight-20)
+  * [Southbound Traffic (Commands)](#southbound-traffic-commands)
+  * [Northbound Traffic (Measurements)](#northbound-traffic-measurements)
+    + [Measurement using HTTP GET](#measurement-using-http-get)
+    + [Measurement using HTTP POST](#measurement-using-http-post)
 
 
 # What are IoT devices?
@@ -60,18 +72,30 @@ The state of each device can be seen on the UltraLight device monitor web-page f
 
 # Architecture
 
-
-The demo application will only make use of a single custom component acting as a message broker for connected devices.
+The demo application will only make use of a single custom component acting as an IoT message broker for connected devices.
+The IoT message broker will be using the [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) protocol running over HTTP.
 Since all interactions are initiated by HTTP requests, the entities can be containerized and run from exposed ports. 
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
+When describing the messages being passed through a working smart solution we will refer to two further components which
+are not used in this tutorial, but will be needed to complete the system subsequently.
+
+* The Orion Context Broker server is used for holding the context data of the smart solution. As you know all 
+  interactions with the context broker must be made using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
+* An IoT Agent acts as a middleware component converting [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) 
+  requests (from the context broker) into a protocol 
+  (such as [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
+  usable by the IoT devices themselves.
+
+It is therefore necessary to understand a sample device protocol first, and comprehend how messages pass 
+through an IoT message broker to subsequently understand the purpose of the IoT agent middleware.
 
 # Prerequisites
 
 ## Docker
 
-To keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container technology
+To keep things simple all components will be run using [Docker](https://www.docker.com). **Docker** is a container technology
 which allows to different components isolated into their respective environments. 
 
 * To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)
@@ -108,11 +132,86 @@ This command will also import seed data from the previous [Stock Management exam
 
 #  Ultralight
 
-To follow the tutorial correctly please ensure you have the follow pages available on tabs in your browser before you enter any cUrl commands.
+To follow the tutorial correctly please ensure you have the device monitor page available in your browser before you enter any cUrl commands. The device monitor displays the current state of an array of dummy devices using Ultralight 2.0 syntax
 
 #### Device Monitor
 
 The device monitor can be found at: `http://localhost:3000/device/monitor`
+
+## What is Ultralight 2.0?
+
+Ultralight 2.0 is a lightweight text based protocol for constrained devices and communications where
+bandwidth and device memory resources are limited. The payload for information update requests is
+composed of a list of key-value pairs separated by the pipe `|` character. 
+
+For example a payload such as:
+
+```
+t|15|k|abc
+```
+
+Contains two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted. 
+Values in Ultralight 2.0 are not typed (everything is treated as a string).
+
+Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, 
+does not specify a single transport protocol. Instead, different transport protocol bindings (such as  HTTP,
+MQTT and AMQP) can be used for different scenarios. For this tutorial we will be using HTTP as a transport protocol.
+
+
+
+
+## Southbound Traffic (Commands)
+
+HTTP requests generated by the from the Context Broker and passed downwards towards an IoT device (via
+an IoT agent) is known as southbound traffic. Southbound traffic consists of **commands** made to 
+actuator devices which alter the state of the real world by their actions. For example a command
+to alter the state of a lamp to `ON` would switch on the lamp in real life. This in turn could alter
+the readings of other sensors nearby.
+
+
+## Northbound Traffic (Measurements)
+
+Requests generated from an IoT device and passed back upwards towards the Context Broker (via an 
+IoT agent) is known as northbound traffic. Northbound traffic consists of **measurements** made
+by sensor devices and relays the state of the real world into the context data of the system.
+For example a measurement from a humidity sensor could be relayed back into the context broker
+to indicate that the moisture level of the entity has changed. A subscription could be made
+to be informed of such changes and there provoke further actions (such as turning on a sprinkler) 
+
+
+###  Measurement using HTTP GET 
+
+
+A device can report new measures to the IoT Platform using an HTTP GET request to a "well-known" endpoint
+(the path `/iot/d`) along with the following query parameters:
+
+* `i` (device ID): Device ID (unique for the API Key).
+* `k` (API Key): API Key for the service the device is registered on.
+* `t` (timestamp): Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
+* `d` (Data): Ultralight 2.0 payload.
+
+The `i` and `k`  parameters are mandatory.
+
+For example the request:
+
+```
+<iot-agent>/iot/d?i=motion001&c=12
+```
+
+Would indicate that the device `id=motion001` wishes to inform the IoT Agent  that is  has made a real-world measurement `c` with
+the value `12`. This would eventually be passed up
+
+###  Measurement using HTTP POST 
+
+HTTP POST can also be used. Again the path will be `/iot/d`, but in this case, `d` (Data) is not necessary - 
+the key-value pairs of the measurement are passed as the body of the request. '`i` and `k` query parameters are
+still mandatory:
+
+* `i` (device ID): Device ID (unique for the API Key).
+* `k` (API Key): API Key for the service the device is registered on.
+* `t` (timestamp): Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
+
+Once again the `i` and `k`  parameters are mandatory.
 
 
 
