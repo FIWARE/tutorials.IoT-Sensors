@@ -1,0 +1,52 @@
+version: "3"
+services:
+  context-db:
+    image: mongo:3.6
+    hostname: context-db
+    container_name: context-db
+    expose:
+        - "27017"
+    ports:
+        - "27017:27017"
+    networks:
+        - default
+    command: --bind_ip_all --smallfiles
+
+  orion:
+    image: fiware/orion:latest
+    hostname: orion
+    container_name: orion
+    depends_on:
+      - context-db
+      - context-provider
+    networks:
+        - default
+    expose:
+        - "1026"
+    ports:
+        - "1026:1026"
+    command: -dbhost context-db -logLevel DEBUG
+
+  context-provider:
+    image: fiware/cp-web-app:latest
+    hostname: context-provider
+    container_name: context-provider
+    networks:
+        - default
+    expose:
+        - "3000"
+        - "7896"
+    ports:
+        - "3000:3000"
+        - "7896:7896"
+    environment:
+        - "DEBUG=proxy:*"
+        - "PORT=3000"
+        - "IOT_DEVICES_PORT=7896"
+        - "CONTEXT_BROKER=http://orion:1026/v2"
+        - "WUNDERGROUND_KEY_ID=<ADD_YOUR_KEY_ID>"
+        - "TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>"
+        - "TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>"
+
+networks:
+  default:
