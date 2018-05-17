@@ -126,7 +126,7 @@ urn:ngsi-ld:Robot:001@turn|left
 ```
 
 Will tell a device *"I am known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker. I would like the device listening on this
-endpooint to perform the `turn` command. I have supplied the parameter `left` as required for the device to be able to perform the manuever"*.
+endpoint to perform the `turn` command. I have supplied the parameter `left` as required for the device to be able to perform the manuever"*.
 
 The defined Northbound response to an IoT Agent is as follows:
 
