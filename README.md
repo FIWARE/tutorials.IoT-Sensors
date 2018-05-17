@@ -8,9 +8,9 @@ constrained devices. The tutorial introduces a series of dummy IoT devices  whic
 allows a user to interact with them. A complete understanding of all the terms and concepts defined in this
 tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via an IoT Agent. 
 
-The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as [Postman documentation](http://fiware.github.io/tutorials.Getting-Started/)
+The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as [Postman documentation](http://fiware.github.io/tutorials.IoT-Sensors/)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
 
 # Contents
 
@@ -125,8 +125,8 @@ required values are passed in subsequent parameters for example
 urn:ngsi-ld:Robot:001@turn|left
 ```
 
-Will tell a device "I am known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker. I would like the device listening on this
-endpooint to perform the `turn` command. I have supplied the parameter `left` as required for the device to be able to perform the manuever.
+Will tell a device *"I am known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker. I would like the device listening on this
+endpooint to perform the `turn` command. I have supplied the parameter `left` as required for the device to be able to perform the manuever"*.
 
 The defined Northbound response to an IoT Agent is as follows:
 
@@ -134,14 +134,15 @@ The defined Northbound response to an IoT Agent is as follows:
 urn:ngsi-ld:Robot:001@turn|Turn ok
 ```
 
-Which is saying "I have complied with a request from the entity known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker.
-The command I have performed was a `turn` command. The result was `Turn ok`.
+Which is saying *"I have complied with a request from the entity known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker.
+The command I have performed was a `turn` command. The result was `Turn ok`"*.
 
-As you can see, because the Southbound command defines the `id` used within the interaction, any response can always be associated to an entity
-held within the Context Broker.
+As you can see, because the Southbound command defines the `id` used within the interaction, and the same data is also returned,
+every response can always be associated to the appropriate entity held within the Context Broker.
 
-Push commands can only be used if the device is able to supply a separate endpoint for listening to southbound traffic, an alternative polling mechanism
-can be used when all interactions are initiated from the device itself, but this is beyond the scope of this tutorial
+Push commands can only be used if the device is able to supply a separate endpoint for listening to southbound traffic, 
+an alternative polling mechanism can be used when all interactions are initiated from the device itself, but this is beyond the scope
+of this tutorial.
 
 
 ## Northbound Traffic (Measurements)
@@ -155,7 +156,6 @@ to be informed of such changes and there provoke further actions (such as turnin
 
 
 ### Measurement using HTTP GET 
-
 
 A device can report new measures to the IoT Platform using an HTTP GET request to a "well-known" endpoint
 (the path `/iot/d`) along with the following query parameters:
@@ -267,13 +267,9 @@ before you enter any cUrl commands. The device monitor displays the current stat
 The device monitor can be found at: `http://localhost:3000/device/monitor`
 
 Within this tutorial you will be playing the role of the missing IoT Agent component, making Southbound commands to the attached IoT devices and 
-receiving Northbound measurements as the enviroment changes within the store. All the commands are made as HTTP POST requests using Ultralight syntax
+receiving Northbound measurements as the environment changes within the store. All the commands are made as HTTP POST requests using Ultralight syntax
 and therefore are very simple. It is worthwhile keeping an eye on the device monitor page as it shows all the Northbound traffic generated
 by the devices themselves. 
-
-
-
-
 
 
 ## Bell Commands
@@ -289,8 +285,14 @@ where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/bell001' \
+  --url 'http://localhost:7896/iot/bell001' \
   --data urn:ngsi-ld:Bell:001@ring
+```
+
+#### Response:
+
+```
+urn:ngsi-ld:Bell:001@ring| ring OK
 ```
 
 The body of the request is in Ultralight syntax and consists of the `id` of the device (`urn:ngsi-ld:Bell:001`) as held in the 
@@ -300,8 +302,7 @@ The response returns the command and the result of the action.
 
 If you are viewing the device monitor page, you can see the state of the bell change.
 
-
-
+![](https://fiware.github.io/tutorials.IoT-Sensors//img/bell-ring.gif)
 
 
 ## Smart Lamp Commands
@@ -320,16 +321,20 @@ already supplied an endpoint `/iot/lamp001` where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/lamp001' \
-  --data rn:ngsi-ld:Lamp:001@on
+  --url 'http://localhost:7896/iot/lamp001' \
+  --data urn:ngsi-ld:Lamp:001@on
 ```
-
 The body of the request consists of the id of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and the name of 
 the command (`on`) to invoke on the device.
 
-The response returns the command and the result of the action.
+#### Response:
 
-Once the lamp is switched the luminocity level will alter dependent upon whether attached **Motion Sensor** detects movement. 
+The response returns the command and the result of the action.
+```
+urn:ngsi-ld:Lamp:001@on| on OK
+```
+
+Once the lamp is switched the luminocity level will alter dependent upon whether the internal motion sensor detects movement. 
 The measurement is actively reported and requests to the IoT Broker can be seen on the device monitor page.
 
 
@@ -342,14 +347,19 @@ The **Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is l
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/lamp001' \
-  --data rn:ngsi-ld:Lamp:001@off
+  --url 'http://localhost:7896/iot/lamp001' \
+  --data urn:ngsi-ld:Lamp:001@off
 ```
-
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and 
 the name of the command (`off`) to invoke on the device.
 
+#### Response:
+
 The response returns the command and the result of the action.
+
+```
+urn:ngsi-ld:Lamp:001@off| off OK
+```
 
 Once the lamp is switched off the luminocity level does not alter. The latest Ultralight measurement (`s|OFF|l|0`) as 
 sent to the IoT Broker can be seen on the device monitor page.
@@ -361,8 +371,14 @@ To turn the **Smart Lamp** back on again repeat the following command:
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/lamp001' \
-  --data rn:ngsi-ld:Lamp:001@on
+  --url 'http://localhost:7896/iot/lamp001' \
+  --data urn:ngsi-ld:Lamp:001@on
+```
+
+#### Response:
+
+```
+urn:ngsi-ld:Lamp:001@on| on OK
 ```
 
 
@@ -382,17 +398,22 @@ The Smart Door has already supplied an endpoint `/iot/door001` where it is liste
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/door001' \
+  --url 'http://localhost:7896/iot/door001' \
   --data urn:ngsi-ld:Door:001@unlock
 ```
-
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker
 and the name of the command (unlock) to invoke on the device.
 
+#### Response:
+
 The response returns the command and the result of the action.
 
+```
+urn:ngsi-ld:Door:001@unlock| unlock OK
+```
+
 Once the **Smart Door** is unlocked, it will automatically open and close as customers enter. The changes of state 
-are actively reported to the IoT Broker, and the sate of the Smart Door can be seen on the device monitor page.
+are actively reported to the IoT Broker, and the state of the Smart Door can be seen on the device monitor page.
 
 The **Motion Sensor** within the store is not an actuator - it does not respond to commands, however it does actively
 measure the number of customers passing by. If the door is unlocked, the **Motion Sensor** will detect movement and send 
@@ -400,7 +421,7 @@ Ultralight measurements back up to the IoT Broker.
 
 The Northbound HTTP requests generated by the **Motion Sensor** can be also viewed on the device monitor page.
 
-
+![](https://fiware.github.io/tutorials.IoT-Sensors//img/door-open.gif)
 
 
 ### Open a Door
@@ -412,23 +433,24 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/door001' \
+  --url 'http://localhost:7896/iot/door001' \
   --data urn:ngsi-ld:Door:001@open
 ```
-
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker 
 and the name of the command (`open`) to invoke on the device.
 
+#### Response:
+
 The response returns the command and the result of the action.
+
+```
+urn:ngsi-ld:Door:001@open| open OK
+```
 
 The state of the **Smart Door** can be seen on the device monitor page. Customers may now enter and the **Motion Sensor** 
 may pick up movement and send measurements to the IoT Broker.
 
 The Northbound HTTP requests generated by the **Smart Door** and the **Motion Sensor** can also be viewed on the device monitor page.
-
-
-
-
 
 
 ### Close a Door
@@ -440,22 +462,24 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/door001' \
+  --url 'http://localhost:7896/iot/door001' \
   --data urn:ngsi-ld:Door:001@close
 ```
-
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and 
 the name of the command (`close`) to invoke on the device.
 
+#### Response:
+
 The response returns the command and the result of the action.
+
+```
+urn:ngsi-ld:Door:001@close| cloes OK
+```
 
 Since the door is currently unlocked, customers will continue to enter, and re-open the door themselves. If motion is detected, 
 the **Motion Sensor** will send measurements to the IoT Broker.
 
 The Northbound HTTP requests generated by the Motion Sensor can also be viewed on the device monitor page.
-
-
-
 
 
 ### Lock a Door
@@ -467,22 +491,27 @@ supplied an endpoint `/iot/door001` where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://{{ultralight}}/iot/door001' \
+  --url 'http://localhost:7896/iot/door001' \
   --data urn:ngsi-ld:Door:001@lock
 ```
 
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and the name of
 the command (`lock`) to invoke on the device.
 
+#### Response:
+
 The response returns the command and the result of the action.
+
+```
+urn:ngsi-ld:Door:001@close| close OK
+```
 
 Once the door is locked, no further customers may enter. The **Motion Sensor** will report no further movement detected, 
 the **Smart Door** cannot be opened manually and the **Smart Lamp** will slowly return to the ambient lighting level.
 
 The Northbound HTTP requests generated by the **Smart Lamp**  can be viewed on the device monitor page.
 
-
-
+![](https://fiware.github.io/tutorials.IoT-Sensors//img/door-lock.gif)
 
 
 
