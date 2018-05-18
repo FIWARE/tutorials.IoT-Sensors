@@ -6,7 +6,7 @@ This tutorial is an introduction to IoT devices and the usage of the
 [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) Protocol for 
 constrained devices. The tutorial introduces a series of dummy IoT devices  which are displayed within the browser and
 allows a user to interact with them. A complete understanding of all the terms and concepts defined in this
-tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via an IoT Agent. 
+tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via a real IoT Agent. 
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as [Postman documentation](http://fiware.github.io/tutorials.IoT-Sensors/)
 
@@ -74,7 +74,8 @@ The state information held within each device, as it will eventually be seen wit
 
 #  What is Ultralight 2.0?
 
-Ultralight 2.0 is a lightweight text based protocol for constrained devices and communications where
+[UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+is a lightweight text based protocol for constrained devices and communications where
 bandwidth and device memory resources are limited. The payload for measurement requests is
 a list of key-value pairs separated by the pipe `|` character. 
 
@@ -107,10 +108,10 @@ the readings of other sensors nearby.
 
 ###  Push Command using HTTP POST 
 
-Setting up the southbound communication between an IoT Agent and an IoT message broker is known as provisioning. This ensures
-that the IoT Agent holds sufficient information to be able to contact the IoT message broker. In other words it knows
+Setting up the southbound communication between an IoT Agent and IoT devices is known as provisioning. This ensures
+that the IoT Agent holds sufficient information to be able to contact each IoT device. In other words it knows
 where to send commands and which commands are supported. In order to send a command to a device, the IoT Agent sends a POST request
-to the endpoint supplied by the IoT message broker. The body of the POST request holds the command.
+to the endpoint supplied by the device. The body of the POST request holds the command.
 
 The payload for Ultralight commands has the following format:
 
@@ -122,11 +123,11 @@ Where `<device_name>` is the entity `id` as held in the context broker, `<comman
 required values are passed in subsequent parameters for example
 
 ```
-urn:ngsi-ld:Robot:001@turn|left
+urn:ngsi-ld:Robot:001@turn|left|30
 ```
 
 Will tell a device *"I am known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker. I would like the device listening on this
-endpoint to perform the `turn` command. I have supplied the parameter `left` as required for the device to be able to perform the manuever"*.
+endpoint to perform the `turn` command. I have supplied the parameters `left` and '`30` (degrees) as required for the device to be able to perform the manuever"*.
 
 The defined Northbound response to an IoT Agent is as follows:
 
@@ -199,8 +200,8 @@ The state of each device can be seen on the UltraLight device monitor web-page f
 
 # Architecture
 
-The demo application will only make use of a single custom component acting as an IoT message broker for connected devices.
-The IoT message broker will be using the [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) protocol running over HTTP.
+The demo application will only make use of a single custom component acting as a set of dummy IoT devices.
+Every IoT device will be using the [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) protocol running over HTTP.
 Since all interactions are initiated by HTTP requests, the entities can be containerized and run from exposed ports. 
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
@@ -215,8 +216,11 @@ are not used in this tutorial, but will be needed to complete the system subsequ
   (such as [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
   usable by the IoT devices themselves.
 
-It is therefore necessary to understand a sample device protocol first, and comprehend how messages pass 
-through an IoT message broker to subsequently understand the purpose of the IoT agent middleware.
+It is therefore necessary to understand a sample device protocol first, and comprehend how messages are 
+passed through the system to subsequently understand the purpose of the IoT Agent middleware. In this
+tutorial you will be playing the role of an IoT Agent making commands to devices and receiving measurements
+from them.
+
 
 # Prerequisites
 
