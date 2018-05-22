@@ -12,6 +12,8 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
 
+* このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
+
 # Contents
 
 - [What are IoT devices?](#what-are-iot-devices)
@@ -127,7 +129,7 @@ urn:ngsi-ld:Robot:001@turn|left|30
 ```
 
 Will tell a device *"I am known as `id="urn:ngsi-ld:Robot:001"` within the Context Broker. I would like the device listening on this
-endpoint to perform the `turn` command. I have supplied the parameters `left` and '`30` (degrees) as required for the device to be able to perform the manuever"*.
+endpoint to perform the `turn` command. I have supplied the parameters `left` and '`30` (degrees) as required for the device to be able to perform the maneuver"*.
 
 The defined Northbound response to an IoT Agent is as follows:
 
@@ -180,7 +182,7 @@ the value `12`. This would eventually be passed up into the Context Broker.
 ### Measurement using HTTP POST 
 
 HTTP POST can also be used. Again the path will be `/iot/d`, but in this case, `d` (Data) is not necessary - 
-the key-value pairs of the measurement are passed as the body of the request. '`i` and `k` query parameters are
+the key-value pairs of the measurement are passed as the body of the request. `i` and `k` query parameters are
 still mandatory:
 
 * `i` (device ID): Device ID (unique for the API Key).
@@ -311,10 +313,10 @@ If you are viewing the device monitor page, you can see the state of the bell ch
 
 ## Smart Lamp Commands
 
-The **Smart Lamp** can be switched on and off remotely - it also registers luminocity. It contains a Motion Sensor within it
+The **Smart Lamp** can be switched on and off remotely - it also registers luminosity. It contains a Motion Sensor within it
 and will slowly dim as time passes (provided no movement is detected)
 
-Measurements will be sent to the IoT Agent as the state and/or luminocity changes.
+Measurements will be sent to the IoT Agent as the state and/or luminosity changes.
 
 ### Switch on a Smart Lamp
 
@@ -328,7 +330,7 @@ curl --request POST \
   --url 'http://localhost:7896/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
-The body of the request consists of the id of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and the name of 
+The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and the name of 
 the command (`on`) to invoke on the device.
 
 #### Response:
@@ -338,7 +340,7 @@ The response returns the command and the result of the action.
 urn:ngsi-ld:Lamp:001@on| on OK
 ```
 
-Once the lamp is switched the luminocity level will alter dependent upon whether the internal motion sensor detects movement. 
+Once the lamp is switched on the luminocity level will alter dependent upon whether the internal motion sensor detects movement. 
 The measurement is actively reported and requests to the IoT Broker can be seen on the device monitor page.
 
 
@@ -388,7 +390,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 
 ## Smart Door Commands
-A Smart Door is an electronic door which can be sent commands to be locked or unlocked remotely. It can also 
+A **Smart Door** is an electronic door which can be sent commands to be locked or unlocked remotely. It can also 
 report on its current state (`OPEN`, `CLOSED` or `LOCKED`),
 
 Measurements will be sent to the IoT Agent as the state changes.
@@ -396,7 +398,7 @@ Measurements will be sent to the IoT Agent as the state changes.
 ### Unlock a Door
 
 This example shows how the IoT broker sends an Ultralight command to a **Smart Door** to unlock the door. 
-The Smart Door has already supplied an endpoint `/iot/door001` where it is listening for commands.
+The **Smart Door** has already supplied an endpoint `/iot/door001` where it is listening for commands.
 
 #### Request:
 
@@ -406,7 +408,7 @@ curl --request POST \
   --data urn:ngsi-ld:Door:001@unlock
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker
-and the name of the command (unlock) to invoke on the device.
+and the name of the command (`unlock`) to invoke on the device.
 
 #### Response:
 
@@ -417,7 +419,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 ```
 
 Once the **Smart Door** is unlocked, it will automatically open and close as customers enter. The changes of state 
-are actively reported to the IoT Broker, and the state of the Smart Door can be seen on the device monitor page.
+are actively reported to the IoT Broker, and the state of the **Smart Door** can be seen on the device monitor page.
 
 The **Motion Sensor** within the store is not an actuator - it does not respond to commands, however it does actively
 measure the number of customers passing by. If the door is unlocked, the **Motion Sensor** will detect movement and send 
@@ -430,7 +432,7 @@ The Northbound HTTP requests generated by the **Motion Sensor** can be also view
 
 ### Open a Door
 
-This example shows how the IoT broker sends a command to a Smart Door to open the door. The **Smart Door**
+This example shows how the IoT broker sends a command to a **Smart Door** to open the door. The **Smart Door**
 has already supplied an endpoint `/iot/door001` where it is listening for commands.
 
 #### Request:
@@ -483,7 +485,7 @@ urn:ngsi-ld:Door:001@close| cloes OK
 Since the door is currently unlocked, customers will continue to enter, and re-open the door themselves. If motion is detected, 
 the **Motion Sensor** will send measurements to the IoT Broker.
 
-The Northbound HTTP requests generated by the Motion Sensor can also be viewed on the device monitor page.
+The Northbound HTTP requests generated by the **Motion Sensor** can also be viewed on the device monitor page.
 
 
 ### Lock a Door
