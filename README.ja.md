@@ -237,7 +237,7 @@ IoT broker がどのようにアクチュエータにコマンドを送信する
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/bell001' \
+  --url 'http://localhost:3001/iot/bell001' \
   --data urn:ngsi-ld:Bell:001@ring
 ```
 
@@ -272,7 +272,7 @@ urn:ngsi-ld:Bell:001@ring| ring OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
 リクエストの本体は、Context Brokerに保持されているデバイス(`urn:ngsi-ld:Lamp:001`)の `id` と、デバイス上で呼び出すコマンド(`on`)の名前で構成されています。
@@ -296,7 +296,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@off
 ```
 リクエストの本体は、Context Broker に保持されているデバイス(`urn:ngsi-ld:Lamp:001`)の `id` と、デバイス上で呼び出すコマンド(`off`)の名前で構成されています。
@@ -317,7 +317,7 @@ urn:ngsi-ld:Lamp:001@off| off OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
 
@@ -343,7 +343,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@unlock
 ```
 リクエストの本文は、Context Broker に保持されているデバイス(`urn:ngsi-ld:Door:001`) の `id`と、デバイス上で呼び出すコマンド(`unlock`)の名前で構成されています。
@@ -374,7 +374,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@open
 ```
 リクエストの本体は、Context Broker に保持されているデバイス(`urn:ngsi-ld:Door:001`) の `id` と、デバイス上で呼び出すコマンド(`open`)の名前で構成されています。
@@ -400,7 +400,7 @@ urn:ngsi-ld:Door:001@open| open OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@close
 ```
 リクエストの本体は、Context Brokerに保持されているデバイス(`urn:ngsi-ld:Door:001`) の `id` と、デバイス上で呼び出すコマンド(`close`)の名前で構成されています。
@@ -427,7 +427,7 @@ urn:ngsi-ld:Door:001@close| cloes OK
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@lock
 ```
 

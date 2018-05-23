@@ -291,7 +291,7 @@ where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/bell001' \
+  --url 'http://localhost:3001/iot/bell001' \
   --data urn:ngsi-ld:Bell:001@ring
 ```
 
@@ -327,7 +327,7 @@ already supplied an endpoint `/iot/lamp001` where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and the name of 
@@ -353,7 +353,7 @@ The **Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is l
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@off
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and 
@@ -377,7 +377,7 @@ To turn the **Smart Lamp** back on again repeat the following command:
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/lamp001' \
+  --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
 
@@ -404,7 +404,7 @@ The **Smart Door** has already supplied an endpoint `/iot/door001` where it is l
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@unlock
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker
@@ -439,7 +439,7 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@open
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker 
@@ -468,7 +468,7 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@close
 ```
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and 
@@ -497,7 +497,7 @@ supplied an endpoint `/iot/door001` where it is listening for commands.
 
 ```console
 curl --request POST \
-  --url 'http://localhost:7896/iot/door001' \
+  --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@lock
 ```
 
