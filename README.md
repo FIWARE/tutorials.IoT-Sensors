@@ -208,6 +208,47 @@ Since all interactions are initiated by HTTP requests, the entities can be conta
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
+
+The 
+```yaml
+  context-provider:
+    image: fiware/cp-web-app:latest
+    hostname: context-provider
+    container_name: context-provider
+    networks:
+        - default
+    expose:
+        - "3000"
+        - "3001"
+    ports:
+        - "3000:3000"
+        - "3001:3001"
+    environment:
+        - "DEBUG=proxy:*"
+        - "PORT=3000"
+        - "IOTA_HTTP_HOST=iot-agent"
+        - "IOTA_HTTP_PORT=7896"
+        - "DUMMY_DEVICES_PORT=3001" # Port used by the dummy IOT devices to receive commands
+        - "DUMMY_DEVICES_API_KEY=4jggokgpepnvsb2uv4s40d59ov"
+```
+
+The `context-provider` container is driven by environment variables as shown:
+
+| Key |Value|Description|
+|-----|-----|-----------|
+|DEBUG|`proxy:*`| Debug flag used for logging |
+|PORT|`3000`|Port used by web-app which displays the dummy device data |
+|IOTA_HTTP_HOST|`iot-agent`| The host name of the missing IoT Agent - used in a later tutorial | 
+|IOTA_HTTP_PORT|`7896` | The port that the missing IoT Agent will be listening on. `7896` is a common default for UltraLight over HTTP |
+|DUMMY_DEVICES_PORT|`3001`|Port used by the dummy IoT devices to receive commands |
+|DUMMY_DEVICES_API_KEY|`4jggokgpepnvsb2uv4s40d59ov`| Random security key used for UltraLight interactions - this will be used in a later tutorial to ensure the integrity of interactions between the devices and the missing IoT Agent |
+
+
+
+The other `context-provider` container configuration values described in the YAML file are not used in this tutorial.
+
+
+
 When describing the messages being passed through a working smart solution we will refer to two further components which
 are not used in this tutorial, but will be needed to complete the system subsequently.
 
