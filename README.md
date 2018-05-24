@@ -236,7 +236,7 @@ The necessary configuration information can be seen in the services section of t
 The `context-provider` container is listening on two ports: 
 
 * Port `3000` is exposed so we can see the web-page displaying the Dummy IoT devices.
-* Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make UltraLight commnds
+* Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make UltraLight commands
   without being part of the same network.
 
 
