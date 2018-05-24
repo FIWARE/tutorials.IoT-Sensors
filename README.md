@@ -211,9 +211,9 @@ Since all interactions are initiated by HTTP requests, the entities can be conta
 When describing the messages being passed through a working smart solution we will refer to two further components which
 are not used in this tutorial, but will be needed to complete the system subsequently.
 
-* The Orion Context Broker server is used for holding the context data of the smart solution. As you know all 
-  interactions with the context broker must be made using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
-* An IoT Agent acts as a middleware component converting [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) 
+* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)is used for holding the context data of the smart solution. As you know all 
+  interactions with the context broker must be made using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+* An IoT Agent acts as a middleware component converting [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 
   requests (from the context broker) into a protocol 
   (such as [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
   usable by the IoT devices themselves.

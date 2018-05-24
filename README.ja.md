@@ -168,8 +168,8 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 実際のスマート・ソリューションを通してメッセージを説明するとき、このチュートリアルでは使用されていない2つのコンポーネントを参照しますが、後でシステムを完了するためには必要になります。
 
-* Orion Context Broker サーバは、スマート・ソリューションのコンテキスト・データを保持するために使用されます。ご存知のように、Context Broker とのやりとりは、すべて [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) を使用して行う必要があります
-* IoT Agent は 、Context Broker からの [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) リクエストを、IoT デバイス自体が使用できるプロトコル(UltraLight 2.0 など)に変換するミドルウェア・コンポーネントとして機能します
+* Orion Context Broker サーバは、スマート・ソリューションのコンテキスト・データを保持するために使用されます。ご存知のように、Context Broker とのやりとりは、すべて [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用して行う必要があります
+* IoT Agent は 、Context Broker からの [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを、IoT デバイス自体が使用できるプロトコル(UltraLight 2.0 など)に変換するミドルウェア・コンポーネントとして機能します
 
 したがって、サンプルのデバイス・プロトコルを最初に理解し、次に IoT Agent ミドルウェアの目的を理解するために、メッセージがシステムをどのように通過するかを理解する必要があります。このチュートリアルでは、あなたが IoT Agent の役割を果たし、デバイスにコマンドを送り、デバイスからの測定値を受信します。
 
