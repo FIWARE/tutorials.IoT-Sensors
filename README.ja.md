@@ -38,6 +38,10 @@
 <a name="what-are-iot-devices"></a>
 # IoTデバイスとは何ですか？
 
+> "All our knowledge begins with the senses."
+>
+> — Immanuel Kant (Critique of Pure Reason)
+
 [Internet of Things](https://www.linux.com/news/who-needs-internet-things) は、ネットワークに接続し、データを交換できる物理デバイスのネットワークです。それぞれの"モノ"または"スマートデバイス"は、センサまたはアクチュエータとして機能する電子機器およびソフトウェアを内蔵したガジェットです。センサは、それらの周囲の現実の状態を報告することができます。アクチュエータは、制御信号に応答することによって、システムの状態を変更する役割を担います。
 
 各デバイスは、組み込みコンピューティング・システムを通じて一意に識別可能ですが、既存のインターネットのインフラストラクチャ内で相互運用することができます。
