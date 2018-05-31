@@ -43,6 +43,10 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 # What are IoT devices?
 
+> "All our knowledge begins with the senses."
+>
+> — Immanuel Kant (Critique of Pure Reason)
+
 The [Internet of Things](https://www.linux.com/news/who-needs-internet-things) (IoT) is a network of physical
 devices which are able to connect to a network and exchange data. Each "thing"  or "smart device" is a gadget
 with embedded electronics and software which can act as a sensor or actuator. Sensors are able to report the
