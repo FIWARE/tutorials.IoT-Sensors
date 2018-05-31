@@ -45,7 +45,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 The [Internet of Things](https://www.linux.com/news/who-needs-internet-things) (IoT) is a network of physical
 devices which are able to connect to a network and exchange data. Each "thing"  or "smart device" is a gadget
-with embedded electronics and sofware which can act as a sensor or actuator. Sensors are able to report the
+with embedded electronics and software which can act as a sensor or actuator. Sensors are able to report the
 state of the real-world around them. Actuators are responsible for altering the state of the system, by responding
 to a control signal.
 
@@ -64,7 +64,7 @@ IoT devices can range from simple to complex. Here are some examples of IoT devi
 * A **Motion Sensor** can be queried to return the number of people who have passed by since it was last reset
 * A **Smart Lamp** can be switched on or off remotely. It can also report on its current state (`ON` or `OFF`).
   When switched on, a Motion Sensor within the device checks to see if light is is needed and will dim if no-one is nearby.
-  Furthermore the device can be report on the current luminocity of the bulb.
+  Furthermore the device can be report on the current luminosity of the bulb.
 
 As you can see, the **Bell** is an example of a pure actuator, as it only reacts to the given commands. Meanwhile the 
 **Motion Sensor** is an example of a pure sensor, since it will only report on the state of the world as it sees it.
@@ -257,7 +257,7 @@ The other `context-provider` container configuration values described in the YAM
 When describing the messages being passed through a working smart solution we will refer to two further components which
 are not used in this tutorial, but will be needed to complete the system subsequently.
 
-* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)is used for holding the context data of the smart solution. As you know all 
+* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) is used for holding the context data of the smart solution. As you know all 
   interactions with the context broker must be made using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 * An IoT Agent acts as a middleware component converting [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 
   requests (from the context broker) into a protocol 
@@ -283,8 +283,8 @@ which allows to different components isolated into their respective environments
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A 
 [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used
-configure the required services for the application. This means all container sevices can be brought up in a single 
-commmand. Docker Compose is installed by default  as part of Docker for Windows and  Docker for Mac, however Linux users 
+configure the required services for the application. This means all container services can be brought up in a single 
+command. Docker Compose is installed by default  as part of Docker for Windows and  Docker for Mac, however Linux users 
 will need to follow the instructions found  [here](https://docs.docker.com/compose/install/)
 
 ## Cygwin 
@@ -294,7 +294,7 @@ command line functionality similar to a Linux distribution on Windows.
 
 # Start Up
 
-All services can be initialised from the command line by running the bash script provided within the repository:
+All services can be initialized from the command line by running the bash script provided within the repository:
 
 ```console
 ./services create; ./services start;
@@ -386,7 +386,7 @@ The response returns the command and the result of the action.
 urn:ngsi-ld:Lamp:001@on| on OK
 ```
 
-Once the lamp is switched on the luminocity level will alter dependent upon whether the internal motion sensor detects movement. 
+Once the lamp is switched on the luminosity level will alter dependent upon whether the internal motion sensor detects movement. 
 The measurement is actively reported and requests to the IoT Broker can be seen on the device monitor page.
 
 
@@ -413,7 +413,7 @@ The response returns the command and the result of the action.
 urn:ngsi-ld:Lamp:001@off| off OK
 ```
 
-Once the lamp is switched off the luminocity level does not alter. The latest Ultralight measurement (`s|OFF|l|0`) as 
+Once the lamp is switched off the luminosity level does not alter. The latest Ultralight measurement (`s|OFF|l|0`) as 
 sent to the IoT Broker can be seen on the device monitor page.
 
 
@@ -525,7 +525,7 @@ the name of the command (`close`) to invoke on the device.
 The response returns the command and the result of the action.
 
 ```
-urn:ngsi-ld:Door:001@close| cloes OK
+urn:ngsi-ld:Door:001@close| close OK
 ```
 
 Since the door is currently unlocked, customers will continue to enter, and re-open the door themselves. If motion is detected, 
