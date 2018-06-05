@@ -38,6 +38,10 @@
 <a name="what-are-iot-devices"></a>
 # IoTデバイスとは何ですか？
 
+> "All our knowledge begins with the senses."
+>
+> — Immanuel Kant (Critique of Pure Reason)
+
 [Internet of Things](https://www.linux.com/news/who-needs-internet-things) は、ネットワークに接続し、データを交換できる物理デバイスのネットワークです。それぞれの"モノ"または"スマートデバイス"は、センサまたはアクチュエータとして機能する電子機器およびソフトウェアを内蔵したガジェットです。センサは、それらの周囲の現実の状態を報告することができます。アクチュエータは、制御信号に応答することによって、システムの状態を変更する役割を担います。
 
 各デバイスは、組み込みコンピューティング・システムを通じて一意に識別可能ですが、既存のインターネットのインフラストラクチャ内で相互運用することができます。
@@ -82,7 +86,6 @@ Ultralight 2.0 は、デバイスとサーバ間で共有する測定値とコ�
 ## サウス・バウンドのトラフィック (コマンド)
 
 Context Broker から生成され、IoT Agent を介して IoT デバイスに向けて下向きに渡された HTTP リクエストを、サウス・バウンド・トラフィックと呼びます。サウス・バウンドのトラフィックは、実世界の状態を動作によって変更するアクチュエータ・デバイスに対する**コマンド**で構成されています。例えば、ランプの状態を `ON` に変更して実際のランプを点灯させるコマンドがあります。これは、近くの他センサの読み取り値を変更する可能性があります。
-the readings of other sensors nearby.
 
 <a name="push-command-using-http-post"></a>
 ###  HTTP POST を使用したプッシュコマンド
@@ -166,9 +169,52 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
-実際のスマート・ソリューションを通してメッセージを説明するとき、このチュートリアルでは使用されていない2つのコンポーネントを参照しますが、後でシステムを完了するためには必要になります。
+必要な設定情報は、関連する `docker-compose.yml` ファイルの services セクションにあります:
 
-* Orion Context Broker サーバは、スマート・ソリューションのコンテキスト・データを保持するために使用されます。ご存知のように、Context Broker とのやりとりは、すべて [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用して行う必要があります
+```yaml
+  context-provider:
+    image: fiware/cp-web-app:latest
+    hostname: context-provider
+    container_name: context-provider
+    networks:
+        - default
+    expose:
+        - "3000"
+        - "3001"
+    ports:
+        - "3000:3000"
+        - "3001:3001"
+    environment:
+        - "DEBUG=proxy:*"
+        - "PORT=3000"
+        - "IOTA_HTTP_HOST=iot-agent"
+        - "IOTA_HTTP_PORT=7896"
+        - "DUMMY_DEVICES_PORT=3001" # Port used by the dummy IOT devices to receive commands
+        - "DUMMY_DEVICES_API_KEY=4jggokgpepnvsb2uv4s40d59ov"
+```
+
+`context-provider` コンテナは、2つのポートでリッスンしています :
+
+* ポート `3000` が公開されているので、ダミー IoT デバイスを表示する Web ページが表示されます。
+* ポート `3001` はチュートリアル・アクセスのためだけに公開されています。このため、cUrl または Postman が同じネットワークの一部ではなく UltraLight コマンドを作成できるようにします。
+
+
+`context-provider` コンテナは以下のように環境変数によってドライブされます:
+
+| Key |Value|Description|
+|-----|-----|-----------|
+|DEBUG|`proxy:*`| ロギングに使用されるデバッグフラグです |
+|PORT|`3000`| ダミーのデバイス・データを表示する web-app が使用するポートです |
+|IOTA_HTTP_HOST|`iot-agent`| 欠落しているIoT Agent のホスト名 - 後のチュートリアルで使用されます | 
+|IOTA_HTTP_PORT|`7896` | 欠落している IoT Agent がリッスンするポート。`7896` は、Ultra Light over HTTP の一般的なデフォルト値です |
+|DUMMY_DEVICES_PORT|`3001`| コマンドを受信するためにダミー IoT デバイスによって使用されるポートです |
+|DUMMY_DEVICES_API_KEY|`4jggokgpepnvsb2uv4s40d59ov`| UltraLight インタラクションに使用されるランダムなセキュリティ・キー - これは、後のチュートリアルで、デバイスと欠落している IoT Agent 間のインタラクションの完全性を保証するために使用されます |
+
+このチュートリアルでは、YAML ファイルに記述されている他の `context-provider` コンテナの設定値は使用していません。
+
+実際のスマート・ソリューションを通してメッセージを示すとき、このチュートリアルでは使用されていない2つのコンポーネントを参照しますが、後でシステムを完了するためには必要になります。
+
+* [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) は、スマート・ソリューションのコンテキスト・データを保持するために使用されます。ご存知のように、Context Broker とのやりとりは、すべて [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用して行う必要があります
 * IoT Agent は 、Context Broker からの [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを、IoT デバイス自体が使用できるプロトコル(UltraLight 2.0 など)に変換するミドルウェア・コンポーネントとして機能します
 
 したがって、サンプルのデバイス・プロトコルを最初に理解し、次に IoT Agent ミドルウェアの目的を理解するために、メッセージがシステムをどのように通過するかを理解する必要があります。このチュートリアルでは、あなたが IoT Agent の役割を果たし、デバイスにコマンドを送り、デバイスからの測定値を受信します。
@@ -410,7 +456,7 @@ curl --request POST \
 レスポンスは、アクションのコマンドと結果を返します。
 
 ```
-urn:ngsi-ld:Door:001@close| cloes OK
+urn:ngsi-ld:Door:001@close| close OK
 ```
 
 ドアは現在ロックされていないので、顧客は引き続きドアに入り、ドアをサイドオープンします。動きが検出されると、**モーション・センサ**は IoT broker に測定値を送信します。
