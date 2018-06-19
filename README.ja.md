@@ -282,7 +282,7 @@ IoT broker がどのようにアクチュエータにコマンドを送信する
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/bell001' \
   --data urn:ngsi-ld:Bell:001@ring
 ```
@@ -317,7 +317,7 @@ urn:ngsi-ld:Bell:001@ring| ring OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
@@ -341,7 +341,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@off
 ```
@@ -362,7 +362,7 @@ urn:ngsi-ld:Lamp:001@off| off OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
@@ -388,7 +388,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@unlock
 ```
@@ -419,7 +419,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@open
 ```
@@ -445,7 +445,7 @@ urn:ngsi-ld:Door:001@open| open OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@close
 ```
@@ -472,7 +472,7 @@ urn:ngsi-ld:Door:001@close| close OK
 #### リクエスト :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@lock
 ```

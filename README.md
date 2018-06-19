@@ -340,7 +340,7 @@ where it is listening for commands.
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/bell001' \
   --data urn:ngsi-ld:Bell:001@ring
 ```
@@ -376,7 +376,7 @@ already supplied an endpoint `/iot/lamp001` where it is listening for commands.
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
@@ -402,7 +402,7 @@ The **Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is l
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@off
 ```
@@ -426,7 +426,7 @@ To turn the **Smart Lamp** back on again repeat the following command:
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/lamp001' \
   --data urn:ngsi-ld:Lamp:001@on
 ```
@@ -453,7 +453,7 @@ The **Smart Door** has already supplied an endpoint `/iot/door001` where it is l
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@unlock
 ```
@@ -488,7 +488,7 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@open
 ```
@@ -517,7 +517,7 @@ has already supplied an endpoint `/iot/door001` where it is listening for comman
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@close
 ```
@@ -546,7 +546,7 @@ supplied an endpoint `/iot/door001` where it is listening for commands.
 #### Request:
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:3001/iot/door001' \
   --data urn:ngsi-ld:Door:001@lock
 ```
