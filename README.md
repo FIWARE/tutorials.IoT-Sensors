@@ -1,4 +1,4 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Sensors//img/Fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Sensors//img/fiware.png)](https://www.fiware.org/developers)
 
 [![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-pink.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 
