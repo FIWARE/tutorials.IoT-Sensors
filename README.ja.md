@@ -243,9 +243,12 @@ ps://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-co
 <a name="start-up"></a>
 # 起動
 
-リポジトリ内で提供される bash スクリプトを実行すると、コマンドラインからすべてのサービスを初期化できます :
+リポジトリ内で提供される bash スクリプトを実行すると、コマンドラインからすべてのサービスを初期化できます。リポジトリを複製し、以下のコマンドを実行して必要なイメージを作成してください :
 
 ```console
+git clone git@github.com:Fiware/tutorials.IoT-Sensors.git
+cd tutorials.IoT-Sensors
+
 ./services create; ./services start;
 ```
 
@@ -279,7 +282,7 @@ ps://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-co
 
 IoT broker がどのようにアクチュエータにコマンドを送信するかを示しています。**Bell**(ベル)は、エンドポイント `/iot/bell001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :one: リクエスト :
 
 ```console
 curl -iX POST \
@@ -314,7 +317,7 @@ urn:ngsi-ld:Bell:001@ring| ring OK
 
 この例は、IoT broker が**スマート・ランプ**に Ultralight  コマンドを送信してスイッチをオンにする方法を示しています。**スマート・ランプ**は、エンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :two: リクエスト :
 
 ```console
 curl -iX POST \
@@ -338,7 +341,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 この例は、 IoT broker が**スマート・ランプ**に Ultralight コマンドを送信してスイッチをオフにする方法を示しています。**スマート・ランプ**はエンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :three: リクエスト :
 
 ```console
 curl -iX POST \
@@ -359,7 +362,7 @@ urn:ngsi-ld:Lamp:001@off| off OK
 
 スマート・ランプを再びオンにするには、次のコマンドを繰り返します :
 
-#### リクエスト :
+#### :four: リクエスト :
 
 ```console
 curl -iX POST \
@@ -385,7 +388,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 この例では、 IoT broker が**スマート・ドア**に Ultralight コマンドを送信してドアのロックを解除する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :five: リクエスト :
 
 ```console
 curl -iX POST \
@@ -416,7 +419,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 
 この例では、 IoT broker がドアを開くために**スマート・ドア**にコマンドを送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :six: リクエスト :
 
 ```console
 curl -iX POST \
@@ -442,7 +445,7 @@ urn:ngsi-ld:Door:001@open| open OK
 
 この例は、IoT broker がドアを閉じるために**スマート・ドア**にコマンドを送信する方法を示しています。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :seven: リクエスト :
 
 ```console
 curl -iX POST \
@@ -469,7 +472,7 @@ urn:ngsi-ld:Door:001@close| close OK
 
 この例では、ドアをロックするために IoT broker が Ultralight コマンドを**スマート・ドア**に送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
-#### リクエスト :
+#### :eight: リクエスト :
 
 ```console
 curl -iX POST \
