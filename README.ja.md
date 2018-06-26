@@ -204,7 +204,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 | Key |Value|Description|
 |-----|-----|-----------|
 |DEBUG|`proxy:*`| ロギングに使用されるデバッグフラグです |
-|PORT|`3000`| ダミーのデバイス・データを表示する web-app が使用するポートです |
+|WEB_APP_PORT|`3000`| ダミーのデバイス・データを表示する web-app が使用するポートです |
 |IOTA_HTTP_HOST|`iot-agent`| 欠落しているIoT Agent のホスト名 - 後のチュートリアルで使用されます | 
 |IOTA_HTTP_PORT|`7896` | 欠落している IoT Agent がリッスンするポート。`7896` は、Ultra Light over HTTP の一般的なデフォルト値です |
 |DUMMY_DEVICES_PORT|`3001`| コマンドを受信するためにダミー IoT デバイスによって使用されるポートです |

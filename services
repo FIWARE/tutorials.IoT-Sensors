@@ -20,7 +20,7 @@ case "${command}" in
         ;;
     "start")
 		echo -e "Starting three containers  \033[1;34mOrion\033[0m, \033[1;30mContext-Provider\033[0m and a \033[1;30mMongoDB\033[0m database."
-		echo -e "\033[1;30mContext-Provider\033[0m acts as a series of dummy IoT Sensors"
+		echo -e "\033[1;30mContext-Provider\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
 		docker-compose -p fiware up -d --remove-orphans
 		sleep 2

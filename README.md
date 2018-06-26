@@ -249,7 +249,7 @@ The `context-provider` container is driven by environment variables as shown:
 | Key |Value|Description|
 |-----|-----|-----------|
 |DEBUG|`proxy:*`| Debug flag used for logging |
-|PORT|`3000`|Port used by web-app which displays the dummy device data |
+|WEB_APP_PORT|`3000`|Port used by web-app which displays the dummy device data |
 |IOTA_HTTP_HOST|`iot-agent`| The host name of the missing IoT Agent - used in a later tutorial | 
 |IOTA_HTTP_PORT|`7896` | The port that the missing IoT Agent will be listening on. `7896` is a common default for UltraLight over HTTP |
 |DUMMY_DEVICES_PORT|`3001`|Port used by the dummy IoT devices to receive commands |
