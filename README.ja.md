@@ -1,6 +1,9 @@
 [![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Sensors//img/fiware.png)](https://www.fiware.org/developers)
 
-[![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-pink.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![FIWARE IoT Agents](https://img.shields.io/badge/FIWARE-IoT_Agents-5dc0cf.svg)](https://www.fiware.org/developers/catalogue/)
+[![Documentation](https://readthedocs.org/projects/fiware-tutorials/badge/?version=latest)](https://fiware-tutorials.readthedocs.io/en/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-5dc0cf.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 
 このチュートリアルでは、IoT デバイスの概要と、制約のあるデバイス(constrained devices)用の [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) プロトコルの使用方法について説明します。このチュートリアルでは、一連のダミー IoT デバイスを紹介します。これらのデバイスは、ブラウザ内に表示され、ユーザがそれらとやりとりすることを可能にします。IoT デバイスを実際の IoT Agent を介して Orion Context Broker に接続する前に、このチュートリアルで定義されているすべての用語と概念を完全に理解する必要があります。
 
@@ -173,7 +176,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 ```yaml
   context-provider:
-    image: fiware/cp-web-app:latest
+    image: fiware/tutorials.context-provider
     hostname: context-provider
     container_name: context-provider
     networks:
@@ -500,23 +503,9 @@ urn:ngsi-ld:Door:001@close| close OK
 <a name="next-steps"></a>
 # 次のステップ
 
-高度な機能を追加することで、アプリケーションに機能を追加する方法を知りたいですか？ このシリーズの他のチュートリアルを読むことで見つけることができます :
+高度な機能を追加することで、アプリケーションに機能を追加する方法を知りたいですか？ このシリーズの他のチュー[トリアルを読むことで](https://www.letsfiware.jp/fiware-tutorials)見つけることができます :
 
-&nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)<br/>
-&nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships)<br/>
-&nbsp; 103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations)<br/>
-&nbsp; 104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers)<br/>
-&nbsp; 105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context)<br/> 
-&nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions)<br/>
 
-&nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors)<br/>
-&nbsp; 202. [Provisioning an IoT Agent](https://github.com/Fiware/tutorials.IoT-Agent)<br/>
-&nbsp; 203. [IoT over MQTT](https://github.com/Fiware/tutorials.IoT-over-MQTT)<br/>
-&nbsp; 250. [Introduction to Fast-RTPS and Micro-RTPS ](https://github.com/Fiware/tutorials.Fast-RTPS-Micro-RTPS)<br/>
-
-&nbsp; 301. [Persisting Context Data (Mongo-DB, MySQL, PostgreSQL)](https://github.com/Fiware/tutorials.Historic-Context)<br/>
-&nbsp; 302. [Querying Time Series Data (Mongo-DB)](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
-&nbsp; 303. [Querying Time Series Data (Crate-DB)](https://github.com/Fiware/tutorials.Time-Series-Data)<br/>
 
 
 
