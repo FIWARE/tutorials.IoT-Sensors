@@ -583,7 +583,11 @@ You can find out by reading the other [tutorials in this series](https://fiware-
 
 
 
+---
 
+## License
+
+[MIT](LICENSE) © FIWARE Foundation e.V.
 
 
 
