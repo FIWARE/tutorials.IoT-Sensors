@@ -236,7 +236,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 * Docker を Linux にインストールするには、[こちら](https://docs.docker.com/install/)の手順に従ってください
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](htt
-ps://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを設定する使用されています。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows とD ocker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります。
+ps://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows とD ocker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります。
 
 <a name="cygwin"></a>
 ## Cygwin 
@@ -503,7 +503,7 @@ urn:ngsi-ld:Door:001@close| close OK
 <a name="next-steps"></a>
 # 次のステップ
 
-高度な機能を追加することで、アプリケーションに機能を追加する方法を知りたいですか？ このシリーズの他のチュー[トリアルを読むことで](https://www.letsfiware.jp/fiware-tutorials)見つけることができます :
+高度な機能を追加することで、アプリケーションに機能を追加する方法を知りたいですか？ このシリーズの[他のチュートリアル](https://www.letsfiware.jp/fiware-tutorials)を読むことで見つけることができます :
 
 
 
@@ -512,3 +512,8 @@ urn:ngsi-ld:Door:001@close| close OK
 
 
 
+---
+
+## License
+
+[MIT](LICENSE) © FIWARE Foundation e.V.
