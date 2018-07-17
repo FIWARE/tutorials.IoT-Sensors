@@ -1,34 +1,5 @@
 version: "3"
 services:
-  mongo-db:
-    image: mongo:3.6
-    hostname: mongo-db
-    container_name: db-mongo
-    expose:
-      - "27017"
-    ports:
-      - "27017:27017"
-    networks:
-      - default
-    command: --bind_ip_all --smallfiles
-    volumes:
-      - mongo-db:/data
-
-  orion:
-    image: fiware/orion:latest
-    hostname: orion
-    container_name: fiware-orion
-    depends_on:
-      - mongo-db
-      - context-provider
-    networks:
-      - default
-    expose:
-      - "1026"
-    ports:
-      - "1026:1026"
-    command: -dbhost mongo-db -logLevel DEBUG
-
   context-provider:
     image: fiware/tutorials.context-provider
     hostname: context-provider
@@ -56,6 +27,3 @@ services:
 
 networks:
   default:
-
-volumes:
-  mongo-db:
