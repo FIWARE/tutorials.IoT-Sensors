@@ -129,7 +129,7 @@ IoT デバイスから生成され、IoT Agent を介して Context Broker に�
 <a name="measurement-using-http-get"></a>
 ### HTTP GET を使用した測定
 
-デバイスは、次のクエリ・パラメータと共に "well-known" エンドポイント(パス `/iot/d`)への HTTP GET リクエストを使用して、IoT プラットフォームに新しい測定値を報告できます :
+デバイスは、次のクエリ・パラメータと共に "well-known" エンドポイント(パス `/iot/d`)への HTTP GET リクエストを使用して、IoT Agent に新しい測定値を報告できます :
 
 * `i` (device ID): デバイス ID。API キーで一意
 * `k` (API Key): デバイスが登録されているサービスの API のキー
@@ -208,7 +208,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 |-----|-----|-----------|
 |DEBUG|`proxy:*`| ロギングに使用されるデバッグフラグです |
 |WEB_APP_PORT|`3000`| ダミーのデバイス・データを表示する web-app が使用するポートです |
-|IOTA_HTTP_HOST|`iot-agent`| 欠落しているIoT Agent のホスト名 - 後のチュートリアルで使用されます | 
+|IOTA_HTTP_HOST|`iot-agent`| 欠落しているIoT Agent のホスト名 - 後のチュートリアルで使用されます |
 |IOTA_HTTP_PORT|`7896` | 欠落している IoT Agent がリッスンするポート。`7896` は、Ultra Light over HTTP の一般的なデフォルト値です |
 |DUMMY_DEVICES_PORT|`3001`| コマンドを受信するためにダミー IoT デバイスによって使用されるポートです |
 |DUMMY_DEVICES_API_KEY|`4jggokgpepnvsb2uv4s40d59ov`| UltraLight インタラクションに使用されるランダムなセキュリティ・キー - これは、後のチュートリアルで、デバイスと欠落している IoT Agent 間のインタラクションの完全性を保証するために使用されます |
@@ -238,8 +238,17 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](htt
 ps://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows とD ocker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります。
 
+次のコマンドを使用して、現在の **Docker** バージョンと **Docker Compose** バージョンを確認できます :
+
+```console
+docker-compose -v
+docker version
+```
+
+Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用していることを確認し、必要に応じてアップグレードしてください。
+
 <a name="cygwin"></a>
-## Cygwin 
+## Cygwin
 
 シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは [cygwin](http://www.cygwin.com/) をダウンロードして、Windows 上の Linux ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
@@ -261,7 +270,7 @@ cd tutorials.IoT-Sensors
 >
 >```console
 >./services stop
->``` 
+>```
 >
 
 <a name="communicating-with-iot-devices"></a>
@@ -283,7 +292,7 @@ cd tutorials.IoT-Sensors
 <a name="ring-a-bell"></a>
 ### ベルを鳴らす
 
-IoT broker がどのようにアクチュエータにコマンドを送信するかを示しています。**Bell**(ベル)は、エンドポイント `/iot/bell001` を提供していて、コマンドをリッスンしています。
+実際の IoT Agent がどのようにアクチュエータにコマンドを送信するかを示しています。**Bell** (ベル) は、エンドポイント `/iot/bell001` を提供していて、コマンドをリッスンしています。
 
 #### :one: リクエスト :
 
@@ -318,7 +327,7 @@ urn:ngsi-ld:Bell:001@ring| ring OK
 <a name="switch-on-a-smart-lamp"></a>
 ### スマート・ランプのスイッチを入れる
 
-この例は、IoT broker が**スマート・ランプ**に Ultralight  コマンドを送信してスイッチをオンにする方法を示しています。**スマート・ランプ**は、エンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
+この例は、実際の IoT Agent が**スマート・ランプ**に Ultralight  コマンドを送信してスイッチをオンにする方法を示しています。**スマート・ランプ**は、エンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
 #### :two: リクエスト :
 
@@ -342,7 +351,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 <a name="switch-off-a-smart-lamp"></a>
 ### スマート・ランプのスイッチを切る
 
-この例は、 IoT broker が**スマート・ランプ**に Ultralight コマンドを送信してスイッチをオフにする方法を示しています。**スマート・ランプ**はエンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
+この例は、 実際の IoT Agent が**スマート・ランプ**に Ultralight コマンドを送信してスイッチをオフにする方法を示しています。**スマート・ランプ**はエンドポイント `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
 #### :three: リクエスト :
 
@@ -389,7 +398,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 <a name="unlock-a-door"></a>
 ### ドアのロックを解除する
 
-この例では、 IoT broker が**スマート・ドア**に Ultralight コマンドを送信してドアのロックを解除する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
+この例では、実際の IoT Agent が**スマート・ドア**に Ultralight コマンドを送信してドアのロックを解除する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
 #### :five: リクエスト :
 
@@ -408,7 +417,7 @@ curl -iX POST \
 urn:ngsi-ld:Door:001@unlock| unlock OK
 ```
 
-**スマート・ドア**のロックが解除されれば、顧客が入ると自動的に開閉ます。状態の変化は積極的に  IoT broker に報告され、**スマート・ドア**の状態はデバイス・モニタのページに表示されます。
+**スマート・ドア**のロックが解除されれば、顧客が入ると自動的に開閉ます。状態の変化は積極的に IoT Broker に報告され、**スマート・ドア**の状態はデバイス・モニタのページに表示されます。
 
 店内のモーション・センサはアクチュエータではなく、コマンドに応答しませんが、通過する顧客の数を積極的に測定します。ドアがロックされていない場合、モーション・センサは動きを検出し、Ultralight 測定値を  IoT broker にバックアップします。
 
@@ -420,7 +429,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 <a name="open-a-door"></a>
 ### ドアを開く
 
-この例では、 IoT broker がドアを開くために**スマート・ドア**にコマンドを送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
+この例では、実際の IoT Agent がドアを開くために**スマート・ドア**にコマンドを送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
 #### :six: リクエスト :
 
@@ -446,7 +455,7 @@ urn:ngsi-ld:Door:001@open| open OK
 <a name="close-a-door"></a>
 ### ドアを閉じる
 
-この例は、IoT broker がドアを閉じるために**スマート・ドア**にコマンドを送信する方法を示しています。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
+この例は、実際の IoT Agent がドアを閉じるために**スマート・ドア**にコマンドを送信する方法を示しています。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
 #### :seven: リクエスト :
 
@@ -473,7 +482,7 @@ urn:ngsi-ld:Door:001@close| close OK
 <a name="lock-a-door"></a>
 ### ドアをロックする
 
-この例では、ドアをロックするために IoT broker が Ultralight コマンドを**スマート・ドア**に送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
+この例では、実際の IoT Agent がドアをロックするために Ultralight コマンドを**スマート・ドア**に送信する方法を示します。**スマート・ドア**はエンドポイント `/iot/door001` を提供していて、コマンドをリッスンしています。
 
 #### :eight: リクエスト :
 
