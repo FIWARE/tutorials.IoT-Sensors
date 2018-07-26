@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 services:
   context-provider:
     image: fiware/tutorials.context-provider
@@ -27,3 +27,6 @@ services:
 
 networks:
   default:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24

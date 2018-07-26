@@ -20,12 +20,13 @@ case "${command}" in
         ;;
     "start")
 		echo -e "Starting one container \033[1;30mContext-Provider\033[0m"
-		echo -e "\033[1;30mContext-Provider\033[0m acts as a series of dummy IoT Sensors over HTTP"
+		echo -e "- \033[1;30mContext-Provider\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
 		echo "loading data"
 		./import-data
-		echo "Now open http://localhost:3000/device/monitor"
+		echo ""
+		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
 		echo "stopping containers"
