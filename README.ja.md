@@ -188,7 +188,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
         - "3000:3000"
         - "3001:3001"
     environment:
-        - "DEBUG=proxy:*"
+        - "DEBUG=tutorial:*"
         - "PORT=3000"
         - "IOTA_HTTP_HOST=iot-agent"
         - "IOTA_HTTP_PORT=7896"
@@ -206,7 +206,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 | Key |Value|Description|
 |-----|-----|-----------|
-|DEBUG|`proxy:*`| ロギングに使用されるデバッグフラグです |
+|DEBUG|`tutorial:*`| ロギングに使用されるデバッグフラグです |
 |WEB_APP_PORT|`3000`| ダミーのデバイス・データを表示する web-app が使用するポートです |
 |IOTA_HTTP_HOST|`iot-agent`| 欠落しているIoT Agent のホスト名 - 後のチュートリアルで使用されます |
 |IOTA_HTTP_PORT|`7896` | 欠落している IoT Agent がリッスンするポート。`7896` は、Ultra Light over HTTP の一般的なデフォルト値です |
