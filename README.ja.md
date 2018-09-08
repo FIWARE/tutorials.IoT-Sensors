@@ -175,10 +175,10 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 必要な設定情報は、関連する `docker-compose.yml` ファイルの services セクションにあります:
 
 ```yaml
-  context-provider:
+  tutorial:
     image: fiware/tutorials.context-provider
-    hostname: context-provider
-    container_name: context-provider
+    hostname: iot-sensors
+    container_name: fiware-tutorial
     networks:
         - default
     expose:
@@ -196,13 +196,13 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
         - "DUMMY_DEVICES_API_KEY=4jggokgpepnvsb2uv4s40d59ov"
 ```
 
-`context-provider` コンテナは、2つのポートでリッスンしています :
+`tutorial` コンテナは、2つのポートでリッスンしています :
 
 * ポート `3000` が公開されているので、ダミー IoT デバイスを表示する Web ページが表示されます。
 * ポート `3001` はチュートリアル・アクセスのためだけに公開されています。このため、cUrl または Postman が同じネットワークの一部ではなく UltraLight コマンドを作成できるようにします。
 
 
-`context-provider` コンテナは以下のように環境変数によってドライブされます:
+`tutorial` コンテナは以下のように環境変数によってドライブされます:
 
 | Key |Value|Description|
 |-----|-----|-----------|
@@ -213,7 +213,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 |DUMMY_DEVICES_PORT|`3001`| コマンドを受信するためにダミー IoT デバイスによって使用されるポートです |
 |DUMMY_DEVICES_API_KEY|`4jggokgpepnvsb2uv4s40d59ov`| UltraLight インタラクションに使用されるランダムなセキュリティ・キー - これは、後のチュートリアルで、デバイスと欠落している IoT Agent 間のインタラクションの完全性を保証するために使用されます |
 
-このチュートリアルでは、YAML ファイルに記述されている他の `context-provider` コンテナの設定値は使用していません。
+このチュートリアルでは、YAML ファイルに記述されている他の `tutorial` コンテナの設定値は使用していません。
 
 実際のスマート・ソリューションを通してメッセージを示すとき、このチュートリアルでは使用されていない2つのコンポーネントを参照しますが、後でシステムを完了するためには必要になります。
 
