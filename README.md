@@ -57,9 +57,9 @@ state of the real-world around them. Actuators are responsible for altering the 
 to a control signal.
 
 Each device is uniquely identifiable through its embedded computing system but is able to inter-operate within the
-existing Internet infrastructure.
+existing internet infrastructure.
 
-FIWARE is a system for managing context information. For a smart solution based on the Internet of Things,
+FIWARE is a system for managing context information. For a smart solution based on the internet of Things,
 the context is provided by the array of attached IoT devices. Since each IoT device is a physical object which
 exists in the real world, it will eventually be represented as a unique entity within the context.
 
@@ -70,14 +70,14 @@ IoT devices can range from simple to complex. Here are some examples of IoT devi
 * A **Bell** can be sent a command to activate and ring for a short period
 * A **Motion Sensor** can be queried to return the number of people who have passed by since it was last reset
 * A **Smart Lamp** can be switched on or off remotely. It can also report on its current state (`ON` or `OFF`).
-  When switched on, a Motion Sensor within the device checks to see if light is is needed and will dim if no-one is nearby.
+  When switched on, a Motion Sensor within the device checks to see if light is needed and will dim if no-one is nearby.
   Furthermore the device can be report on the current luminosity of the bulb.
 
 As you can see, the **Bell** is an example of a pure actuator, as it only reacts to the given commands. Meanwhile the
 **Motion Sensor** is an example of a pure sensor, since it will only report on the state of the world as it sees it.
 The other two devices are able to both respond to commands and report on state in a meaningful way.
 
-The state information held within each device, as it will eventually be seen within the Context Broker is defined in in the diagram below:
+The state information held within each device, as it will eventually be seen within the Context Broker is defined in  the diagram below:
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/entities.png)
 
@@ -202,7 +202,7 @@ Once again the `i` and `k`  parameters are mandatory.
 #### Device Monitor
 
 For the purpose of this tutorial, a series of dummy IoT devices have been created, which will eventually be attached to the context broker.
-The state of each device can be seen on the UltraLight device monitor web-page found at: `http://localhost:3000/device/monitor`
+The state of each device can be seen on the UltraLight device monitor web page found at: `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/device-monitor.png)
 
@@ -242,7 +242,7 @@ The necessary configuration information can be seen in the services section of t
 
 The `tutorial` container is listening on two ports:
 
-* Port `3000` is exposed so we can see the web-page displaying the Dummy IoT devices.
+* Port `3000` is exposed so we can see the web page displaying the Dummy IoT devices.
 * Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make UltraLight commands
   without being part of the same network.
 
@@ -253,7 +253,7 @@ The `tutorial` container is driven by environment variables as shown:
 |-----|-----|-----------|
 |DEBUG|`tutorial:*`| Debug flag used for logging |
 |WEB_APP_PORT|`3000`|Port used by web-app which displays the dummy device data |
-|IOTA_HTTP_HOST|`iot-agent`| The host name of the missing IoT Agent - used in a later tutorial |
+|IOTA_HTTP_HOST|`iot-agent`| The hostname of the missing IoT Agent - used in a later tutorial |
 |IOTA_HTTP_PORT|`7896` | The port that the missing IoT Agent will be listening on. `7896` is a common default for UltraLight over HTTP |
 |DUMMY_DEVICES_PORT|`3001`|Port used by the dummy IoT devices to receive commands |
 |DUMMY_DEVICES_API_KEY|`4jggokgpepnvsb2uv4s40d59ov`| Random security key used for UltraLight interactions - this will be used in a later tutorial to ensure the integrity of interactions between the devices and the missing IoT Agent |
@@ -306,11 +306,11 @@ Please ensure that you are using Docker version 18.03 or higher and Docker Compo
 ## Cygwin
 
 We will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/) to provide a
-command line functionality similar to a Linux distribution on Windows.
+command-line functionality similar to a Linux distribution on Windows.
 
 # Start Up
 
-All services can be initialized from the command line by running the bash script provided within the repository. Please clone the repository and create the necessary images by running the commands as shown:
+All services can be initialized from the command-line by running the bash script provided within the repository. Please clone the repository and create the necessary images by running the commands as shown:
 
 ```console
 git clone git@github.com:Fiware/tutorials.IoT-Sensors.git
