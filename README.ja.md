@@ -2,14 +2,14 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
-[![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-5dc0cf.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-5dc0cf.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-このチュートリアルでは、IoT デバイスの概要と、制約のあるデバイス(constrained devices)用の [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) プロトコルの使用方法について説明します。このチュートリアルでは、一連のダミー IoT デバイスを紹介します。これらのデバイスは、ブラウザ内に表示され、ユーザがそれらとやりとりすることを可能にします。IoT デバイスを実際の IoT Agent を介して Orion Context Broker に接続する前に、このチュートリアルで定義されているすべての用語と概念を完全に理解する必要があります。
+このチュートリアルでは、IoT デバイスの概要と、制約のあるデバイス(constrained devices)用の [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) プロトコルの使用方法について説明します。このチュートリアルでは、一連のダミー IoT デバイスを紹介します。これらのデバイスは、ブラウザ内に表示され、ユーザがそれらとやりとりすることを可能にします。IoT デバイスを実際の IoT Agent を介して Orion Context Broker に接続する前に、このチュートリアルで定義されているすべての用語と概念を完全に理解する必要があります。
 
-このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、[Postman documentation](http://fiware.github.io/tutorials.Getting-Started/) も利用できます。
+このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、[Postman documentation](https://fiware.github.io/tutorials.Getting-Started/) も利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
 
@@ -69,7 +69,7 @@ IoT デバイスは、単純なものから複雑なものまで様々です。�
 <a name="what-is-ultralight-20"></a>
 #  Ultralight 2.0 とは何ですか？
 
-[UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) は、帯域幅とデバイスのメモリ・リソースが制限されている、制約のあるデバイスや通信用の軽量テキストベースのプロトコルです。測定要求のペイロードは、パイプ `|` 文字で区切られたキーと値のペアのリストです。
+[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) は、帯域幅とデバイスのメモリ・リソースが制限されている、制約のあるデバイスや通信用の軽量テキストベースのプロトコルです。測定要求のペイロードは、パイプ `|` 文字で区切られたキーと値のペアのリストです。
 
 例えば
 
@@ -170,7 +170,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 <a name="architecture"></a>
 # アーキテクチャ
 
-デモアプリケーションは、ダミーの IoT デバイスのセットとして機能する単一のカスタム・コンポーネントのみを使用します。すべての IoT デバイスは、HTTP 上で動作する [UltraLight 2.0](http://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) プロトコルを使用します。すべての対話は HTTP リクエストによって開始されるため、エンティティはコンテナ化され、公開されたポートから実行されます。
+デモアプリケーションは、ダミーの IoT デバイスのセットとして機能する単一のカスタム・コンポーネントのみを使用します。すべての IoT デバイスは、HTTP 上で動作する [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) プロトコルを使用します。すべての対話は HTTP リクエストによって開始されるため、エンティティはコンテナ化され、公開されたポートから実行されます。
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
