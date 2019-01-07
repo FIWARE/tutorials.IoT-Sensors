@@ -25,6 +25,9 @@ Context Broker に接続する前に、このチュートリアルで定義さ�
 
 # コンテンツ
 
+<details>
+<summary>詳細 <b>(クリックして拡大)</b></summary>
+
 -   [IoT デバイスとは何ですか？](#what-are-iot-devices)
 -   [Ultralight 2.0 とは何ですか？](#what-is-ultralight-20)
     -   [サウス・バウンドのトラフィック (コマンド)](#southbound-traffic-commands)
@@ -49,6 +52,8 @@ Context Broker に接続する前に、このチュートリアルで定義さ�
         -   [ドアを閉じる](#close-a-door)
         -   [ドアをロックする](#lock-a-door)
 -   [次のステップ](#next-steps)
+
+</details>
 
 <a name="what-are-iot-devices"></a>
 

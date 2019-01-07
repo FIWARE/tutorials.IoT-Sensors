@@ -23,7 +23,10 @@ available as
 
 -   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
-# Contents
+## Contents
+
+<details>
+<summary><strong>Details</strong></summary>
 
 -   [What are IoT devices?](#what-are-iot-devices)
 -   [What is Ultralight 2.0?](#what-is-ultralight-20)
@@ -49,6 +52,8 @@ available as
         -   [Close a Door](#close-a-door)
         -   [Lock a Door](#lock-a-door)
 -   [Next Steps](#next-steps)
+
+</details>
 
 # What are IoT devices?
 
