@@ -12,6 +12,11 @@ loadData () {
 	echo ""
 }
 
+stoppingContainers () {
+	echo "Stopping containers"
+	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+}
+
 if (( $# != 1 )); then
     echo "Illegal number of parameters"
     echo "usage: services [create|start|stop]"
@@ -24,6 +29,7 @@ case "${command}" in
         echo "usage: services [create|start|stop]"
         ;;
     "start")
+		stoppingContainers
 		echo -e "Starting one container \033[1;30mTutorial\033[0m"
 		echo -e "- \033[1;30mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
@@ -32,12 +38,11 @@ case "${command}" in
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
-		echo "stopping containers"
-		docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+		stoppingContainers
 		;;
 	"create")
-		echo "Obtaining Tutorial Application"
-		docker pull fiware/tutorials.context-provider
+		echo "Pulling Docker images"
+		docker-compose --log-level ERROR -p fiware pull
 		;;
 	*)
 		echo "Command not Found."
