@@ -1,6 +1,5 @@
 version: "3.1"
 services:
-
   mongo-db:
     image: mongo:3.6
     hostname: mongo-db
@@ -65,5 +64,5 @@ networks:
       config:
         - subnet: 172.18.1.0/24
 
-volumes: 
+volumes:
   mongo-db: ~
