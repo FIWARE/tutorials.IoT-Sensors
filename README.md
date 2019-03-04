@@ -324,7 +324,7 @@ cd tutorials.IoT-Sensors
 ```
 
 This command will also import seed data from the previous
-[Stock Management example](https://github.com/Fiware/tutorials.Context-Providers) on startup.
+[Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >

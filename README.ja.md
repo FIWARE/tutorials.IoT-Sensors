@@ -403,7 +403,7 @@ cd tutorials.IoT-Sensors
 ```
 
 このコマンドは、起動時に以前
-の[在庫管理の例](https://github.com/Fiware/tutorials.Context-Providers)からシー
+の[在庫管理の例](https://github.com/FIWARE/tutorials.Context-Providers)からシー
 ドデータをインポートします。
 
 > :information_source: **注** : クリーンアップをやり直したい場合は、次のコマンド
