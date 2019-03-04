@@ -317,7 +317,7 @@ All services can be initialized from the command-line by running the bash script
 clone the repository and create the necessary images by running the commands as shown:
 
 ```console
-git clone git@github.com:Fiware/tutorials.IoT-Sensors.git
+git clone git@github.com:FIWARE/tutorials.IoT-Sensors.git
 cd tutorials.IoT-Sensors
 
 ./services create; ./services start;
