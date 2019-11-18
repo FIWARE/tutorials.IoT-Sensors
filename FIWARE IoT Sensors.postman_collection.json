@@ -315,13 +315,13 @@
 	],
 	"variable": [
 		{
-			"id": "b2301265-74b2-4f6e-8de3-1755d3733b2d",
+			"id": "5922f027-0ae3-4b6a-acb1-69875e473e93",
 			"key": "ultralight",
 			"value": "localhost:3001",
 			"type": "string"
 		},
 		{
-			"id": "5e61319c-e546-44c9-9bb2-858c89569f4d",
+			"id": "2acbd881-14f8-400e-a8be-a5f40f98b6a2",
 			"key": "iot-agent-southport",
 			"value": "localhost:7896",
 			"type": "string"
