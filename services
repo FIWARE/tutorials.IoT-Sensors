@@ -30,8 +30,8 @@ case "${command}" in
         ;;
     "start")
 		stoppingContainers
-		echo -e "Starting one container \033[1;30mTutorial\033[0m"
-		echo -e "- \033[1;30mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
+		echo -e "Starting one container \033[1mTutorial\033[0m"
+		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
 		loadData
