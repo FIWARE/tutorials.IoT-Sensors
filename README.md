@@ -17,7 +17,9 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
 
--   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
+🇯🇵 このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。<br/>
+🇪🇸 Este tutorial también está disponible en [español](README.es.md)
+
 
 ## Contents
 
