@@ -2,15 +2,15 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
-[![NGSI v2](https://img.shields.io/badge/Ultralight-2.0-5dc0cf.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![NGSI v2](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-Este tutorial es una introducción a los dispositivos IoT y al uso del protocolo 
+Este tutorial es una introducción a los dispositivos IoT y al uso del protocolo
 [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 para dispositivos con capacidades limitadas. El tutorial presenta una serie de dispositivos ficticios que se muestran en el navegador y permiten interactuar con ellos. Se necesita una comprensión completa de todos los términos y conceptos en este tutorial antes de proceder a conectar un dispositivo IoT al Orion Context Broker por medio de un agente IoT real.
 
-A lo largo de este tutorial se usan comandos [cUrl](https://ec.haxx.se/), pero también está disponible como 
+A lo largo de este tutorial se usan comandos [cUrl](https://ec.haxx.se/), pero también está disponible como
 [documentación Postman](https://fiware.github.io/tutorials.IoT-Sensors/)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
@@ -166,7 +166,7 @@ Tambien se puede usar una petición HTTP POST para el envío de datos. Una vez m
 
 #### Monitor de dispositivos
 
-Para el propósito de este tutorial, se han creado una serie de dispositivos IoT ficticios, asociados al BCntext Broker. El estado de cada dispositivo se puede ver en la página web del monitor de dispositivos UltraLight que se encuentra en: 
+Para el propósito de este tutorial, se han creado una serie de dispositivos IoT ficticios, asociados al BCntext Broker. El estado de cada dispositivo se puede ver en la página web del monitor de dispositivos UltraLight que se encuentra en:
 `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/device-monitor.png)
