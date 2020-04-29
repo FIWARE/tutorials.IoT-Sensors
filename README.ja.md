@@ -326,10 +326,10 @@ tutorial:
 -   [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) は、
     スマート・ソリューションのコンテキスト・データを保持するために使用されます。
     ご存知のように、Context Broker とのやりとりは、すべて
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用して行
+    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用して行
     う必要があります
 -   IoT Agent は 、Context Broker からの
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを
+    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを
     、IoT デバイス自体が使用できるプロトコル(UltraLight 2.0 など)に変換するミド
     ルウェア・コンポーネントとして機能します
 

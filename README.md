@@ -269,9 +269,9 @@ are not used in this tutorial, but will be needed to complete the system subsequ
 
 -   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) is used for holding the context data of
     the smart solution. As you know all interactions with the context broker must be made using
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 -   An IoT Agent acts as a middleware component converting
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) requests (from the context broker) into a protocol
+    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) requests (from the context broker) into a protocol
     (such as
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
     usable by the IoT devices themselves.

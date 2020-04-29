@@ -222,8 +222,8 @@ Los otros valores de configuración del contenedor `tutorial` descritos en el ar
 Al describir los mensajes que se pasan a través de una solución inteligente de trabajo nos referiremos a dos componentes más que
 no se utilizan en este tutorial, pero serán necesarios para completar el sistema posteriormente.
 
--   El [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) se utiliza para guardar los datos de contexto de la        solución inteligente. Como sabes, todas las interacciones con el Context Broker deben hacerse usando [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
--   Un agente IoT actúa com intermediario o middleware convirtiendo peticiones [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) (desde el Context Broker) a otro protocolo (como por ejemplo [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)) usable por los propios dispositivos IoT.
+-   El [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) se utiliza para guardar los datos de contexto de la        solución inteligente. Como sabes, todas las interacciones con el Context Broker deben hacerse usando [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+-   Un agente IoT actúa com intermediario o middleware convirtiendo peticiones [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) (desde el Context Broker) a otro protocolo (como por ejemplo [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)) usable por los propios dispositivos IoT.
 
 Por lo tanto, es necesario comprender primero un protocolo de dispositivo de ejemplo, y comprender cómo se pasan los mensajes a través del sistema para posteriormente comprender el propósito del middleware o Agente IoT. En este tutorial desempeñaremos el papel de un Agente IoT que envía comandos a los dispositivos y recibe mediciones de ellos.
 
