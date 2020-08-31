@@ -263,6 +263,7 @@ clone el repositorio y cree las imágenes necesarias ejecutando los comandos com
 ```console
 git clone https://github.com/FIWARE/tutorials.IoT-Sensors.git
 cd tutorials.IoT-Sensors
+git checkout NGSI-v2
 
 ./services create; ./services start;
 ```
