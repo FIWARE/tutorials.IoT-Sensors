@@ -214,7 +214,7 @@ device will be using the
 protocol running over HTTP. Since all interactions are initiated by HTTP requests, the entities can be containerized and
 run from exposed ports.
 
-![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
+![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture-ld.png)
 
 The necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file:
 
