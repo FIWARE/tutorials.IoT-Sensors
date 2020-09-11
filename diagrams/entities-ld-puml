@@ -1,0 +1,55 @@
+@startuml
+
+skinparam object {
+  BackgroundColor #f5f5f5
+  ArrowColor #4c4c4c
+  BorderColor #5dc0cf
+}
+
+object IrrigationSystem
+
+IrrigationSystem : id 
+IrrigationSystem : ~commands 
+
+object FillingSensor
+
+FillingSensor : id 
+FillingSensor : ~fillingLevel
+
+object SoilSensor
+
+SoilSensor : id 
+SoilSensor : ~humidity
+
+
+object TemperatureSensor
+
+TemperatureSensor : id 
+TemperatureSensor : ~temperature
+
+
+object AnimalCollar
+
+AnimalCollar : id 
+AnimalCollar : ~location 
+AnimalCollar : ~state 
+AnimalCollar : ~heartRate 
+
+object FMIS
+
+FMIS : id 
+FMIS : ~state 
+FMIS : ~location
+FMIS : ~commands
+
+object Device
+Device : -controllingAsset
+
+
+Device -up-|> TemperatureSensor
+Device -up-|> SoilSensor
+Device -up-|> IrrigationSystem
+Device -up-|> FillingSensor
+Device -up-|> AnimalCollar
+Device -up-|> FMIS
+@enduml
