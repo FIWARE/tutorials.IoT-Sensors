@@ -6,7 +6,7 @@
 [![JSON LD](https://img.shields.io/badge/JSON--LD-1.1-f06f38.svg)](https://w3c.github.io/json-ld-syntax/)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
-<br/> 👩‍🌾 👨‍🌾  🐄 🐏 🐐 🐓 🐄 🐏 🐐 🐓 🐄 🐏 🐐 🐓 🐄 🐏 🐐 🐓 🐄 🐏 🐐 🐓 🐄  
+👩‍🌾 👨‍🌾  🐄 🐏 🐐 🐓
 
 This tutorial is an introduction to IoT devices and the usage of the
 [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
