@@ -9,55 +9,28 @@
 
 This tutorial is an introduction to IoT devices and the usage of the
 [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-Protocol for constrained devices. The tutorial introduces a series of dummy IoT devices which are displayed within the
+Protocol for constrained devices. The tutorial introduces a series of dummy agricultural IoT devices which are displayed within the
 browser and allows a user to interact with them. A complete understanding of all the terms and concepts defined in this
-tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via a real IoT Agent.
+tutorial is necessary before proceeding to connect the IoT devices to an NGSI-LD context broker via a real IoT Agent.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
 [Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32975e01a2c250698149)
-
-🇯🇵 このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。<br/> 🇪🇸 Este tutorial también está disponible en
-[español](README.es.md)
 
 ## Contents
 
 <details>
 <summary><strong>Details</strong></summary>
 
--   [What are IoT devices?](#what-are-iot-devices)
--   [What is Ultralight 2.0?](#what-is-ultralight-20)
-    -   [Southbound Traffic (Commands)](#southbound-traffic-commands)
-        -   [Push Command using HTTP POST](#push-command-using-http-post)
-    -   [Northbound Traffic (Measurements)](#northbound-traffic-measurements)
-        -   [Measurement using HTTP GET](#measurement-using-http-get)
-        -   [Measurement using HTTP POST](#measurement-using-http-post)
--   [Architecture](#architecture)
--   [Prerequisites](#prerequisites)
-    -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
--   [Start Up](#start-up)
--   [Communicating with IoT Devices](#communicating-with-iot-devices)
-    -   [Bell Commands](#bell-commands)
-        -   [Ring a bell](#ring-a-bell)
-    -   [Smart Lamp Commands](#smart-lamp-commands)
-        -   [Switch on a Smart Lamp](#switch-on-a-smart-lamp)
-        -   [Switch off a Smart Lamp](#switch-off-a-smart-lamp)
-    -   [Smart Door Commands](#smart-door-commands)
-        -   [Unlock a Door](#unlock-a-door)
-        -   [Open a Door](#open-a-door)
-        -   [Close a Door](#close-a-door)
-        -   [Lock a Door](#lock-a-door)
--   [Next Steps](#next-steps)
-
 </details>
 
 # What are IoT devices?
 
-> "All our knowledge begins with the senses."
+> "A farm is a manipulative creature. There is no such thing as finished.
+> Work comes in a stream and has no end. There are only the things that must
+> be done now and things that can be done later.."
 >
-> — Immanuel Kant (Critique of Pure Reason)
+> — Kristin Kimball, The Dirty Life: On Farming, Food, and Love
 
 The [Internet of Things](https://www.linux.com/news/who-needs-internet-things) (IoT) is a network of physical devices
 which are able to connect to a network and exchange data. Each "thing" or "smart device" is a gadget with embedded
@@ -71,25 +44,23 @@ FIWARE is a system for managing context information. For a smart solution based 
 is provided by the array of attached IoT devices. Since each IoT device is a physical object which exists in the real
 world, it will eventually be represented as a unique entity within the context.
 
-IoT devices can range from simple to complex. Here are some examples of IoT devices which will be used within this
+IoT devices can range from simple to complex. Here are some examples of agricultural IoT devices which will be used within this
 tutorial:
 
--   A **Smart Door** is an electronic door which can be sent commands to be locked or unlocked remotely. It can also
-    report on its current state (`OPEN`, `CLOSED` or `LOCKED`),
--   A **Bell** can be sent a command to activate and ring for a short period
--   A **Motion Sensor** can be queried to return the number of people who have passed by since it was last reset
--   A **Smart Lamp** can be switched on or off remotely. It can also report on its current state (`ON` or `OFF`). When
-    switched on, a Motion Sensor within the device checks to see if light is needed and will dim if no-one is nearby.
-    Furthermore the device can be report on the current luminosity of the bulb.
+-   A **Soil Sensor** can report on the amount of moisture in the ground
+-   A **Temperature Sensor** can be queried to return current air or soil temperature
+-   A **Filling Sensor** can report the amount of feed left in a silo
+-   An **Irrigation System** can be sent a command to activate and turn on for a short period
+-   **Animal Collars** can be used to track the location, health and stress-levels of livestock
+-  **Farm Management Information Systems** placed in agricultural machinery can be used send and receive instructions to labourers, track the state of tasks and follow the progress of them.
 
-As you can see, the **Bell** is an example of a pure actuator, as it only reacts to the given commands. Meanwhile the
-**Motion Sensor** is an example of a pure sensor, since it will only report on the state of the world as it sees it. The
-other two devices are able to both respond to commands and report on state in a meaningful way.
+As you can see, the **Irrigation System** is an example of a pure actuator, as it only reacts to the given commands. Meanwhile the
+**Soil Sensor** is an example of a pure sensor, since it will only report on the state of the world as it sees it. Some devices such as an **FMIS** are able to both respond to commands and report on state in a meaningful way.
 
 The state information held within each device, as it will eventually be seen within the Context Broker is defined in the
 diagram below:
 
-![](https://fiware.github.io/tutorials.IoT-Sensors/img/entities.png)
+![](https://fiware.github.io/tutorials.IoT-Sensors/img/entities-ld.png)
 
 # What is Ultralight 2.0?
 
@@ -186,11 +157,11 @@ The `i` and `k` parameters are mandatory.
 For example the request:
 
 ```
-<iot-agent>/iot/d?i=motion001&d=c|12
+<iot-agent>/iot/d?i=humidity001&d=h|12
 ```
 
 Would indicate that the device `id=motion001` wishes to inform the IoT Agent that is has made a real-world measurement
-`c` with the value `12`. This would eventually be passed up into the Context Broker.
+`h` with the value `12`. This would eventually be passed up into the Context Broker.
 
 ### Measurement using HTTP POST
 
@@ -210,7 +181,7 @@ For the purpose of this tutorial, a series of dummy IoT devices have been create
 the context broker. The state of each device can be seen on the UltraLight device monitor web page found at:
 `http://localhost:3000/device/monitor`
 
-![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/device-monitor.png)
+![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/farm-devices.png)
 
 # Architecture
 
@@ -226,7 +197,7 @@ The necessary configuration information can be seen in the services section of t
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.context-provider
+    image: fiware/tutorials.ngsi-ld
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:
@@ -270,14 +241,14 @@ are not used in this tutorial, but will be needed to complete the system subsequ
 
 -   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) is used for holding the context data of
     the smart solution. As you know all interactions with the context broker must be made using
-    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
 -   An IoT Agent acts as a middleware component converting
-    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) requests (from the context broker) into a protocol
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json) requests (from the context broker) into a protocol
     (such as
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
     usable by the IoT devices themselves.
 
-It is therefore necessary to understand a sample device protocol first, and comprehend how messages are passed through
+It is therefore necessary to understand a sample device protocol first, and fully comprehend how messages are passed through
 the system to subsequently understand the purpose of the IoT Agent middleware. In this tutorial you will be playing the
 role of an IoT Agent making commands to devices and receiving measurements from them.
 
@@ -321,12 +292,13 @@ clone the repository and create the necessary images by running the commands as 
 ```console
 git clone https://github.com/FIWARE/tutorials.IoT-Sensors.git
 cd tutorials.IoT-Sensors
+git checkout NGSI-LD
 
-./services create; ./services start;
+./services start;
 ```
 
 This command will also import seed data from the previous
-[Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
+[Farm Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >
@@ -349,12 +321,12 @@ attached IoT devices and receiving Northbound measurements as the environment ch
 are made as HTTP POST requests using Ultralight syntax and therefore are very simple. It is worthwhile keeping an eye on
 the device monitor page as it shows all the Northbound traffic generated by the devices themselves.
 
-## Bell Commands
+## Irrigation System Commands
 
-A **Bell** is an example of an actuator. It can respond to commands, but the device does not supply any measurements
+An **Irrigation System** water sprinkler is an example of an actuator. It can respond to commands, but the device does not supply any measurements
 from the real world.
 
-### Ring a bell
+### Turn on the Irrigation System
 
 This example shows how a real IoT Agent would send commands to an actuator. The **Bell** has supplied an endpoint
 `/iot/bell001` where it is listening for commands.
@@ -362,111 +334,109 @@ This example shows how a real IoT Agent would send commands to an actuator. The 
 #### :one: Request:
 
 ```console
-curl -iX POST \
-  --url 'http://localhost:3001/iot/bell001' \
-  --data urn:ngsi-ld:Bell:001@ring
+curl -iX POST 'localhost:3001/iot/water001' \
+-H 'Content-Type: text/plain'
 ```
 
 #### Response:
 
 ```
-urn:ngsi-ld:Bell:001@ring| ring OK
+urn:ngsi-ld:Device:water001@on| on OK
 ```
 
-The body of the request is in Ultralight syntax and consists of the `id` of the device (`urn:ngsi-ld:Bell:001`) as held
-in the Context Broker and the name of the command (`ring`) to invoke on the device.
+The body of the request is in Ultralight syntax and consists of the `id` of the device (`urn:ngsi-ld:Device:water001`) as held
+in the Context Broker and the name of the command (`on`) to invoke on the device.
 
 The response returns the command and the result of the action.
 
-If you are viewing the device monitor page, you can see the state of the bell change.
+If you are viewing the device monitor page, you can see the state of the water sprinkler change.
 
-![](https://fiware.github.io/tutorials.IoT-Sensors/img/bell-ring.gif)
+![](https://fiware.github.io/tutorials.IoT-Sensors/img/water-on.png)
 
-## Smart Lamp Commands
+## Tractor Commands
 
-The **Smart Lamp** can be switched on and off remotely - it also registers luminosity. It contains a Motion Sensor
-within it and will slowly dim as time passes (provided no movement is detected)
+Using the simple **FMIS** system found within a Tractor can send tasks to the operator of the tractor - it can also report on the locationa and status of the vehicle.
 
-Measurements will be sent to the IoT Agent as the state and/or luminosity changes.
+Measurements will be returned to the IoT Agent as the state of work and location changes.
 
-### Switch on a Smart Lamp
+### Activate a Tractor
 
-This example shows how a real IoT Agent would send an Ultralight command to a **Smart Lamp** to switch it on. The
-**Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
+This example shows how a real IoT Agent would send an Ultralight command to a **Tractor** FMIS to move it from an idle to an active state. The
+unit with the **Tractor** itself has already supplied an endpoint `/iot/tractor001` where it is listening for commands.
 
 #### :two: Request:
 
 ```console
 curl -iX POST \
-  --url 'http://localhost:3001/iot/lamp001' \
-  --data urn:ngsi-ld:Lamp:001@on
+  --url 'http://localhost:3001/iot/tractor001' \
+  --data urn:ngsi-ld:Device:tractor001@start
 ```
 
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and
-the name of the command (`on`) to invoke on the device.
+The body of the request consists of the `id` of the device (`urn:ngsi-ld:Device:tractor001`) as held in the Context Broker and
+the name of the command (`start`) to invoke on the device.
 
 #### Response:
 
 The response returns the command and the result of the action.
 
 ```
-urn:ngsi-ld:Lamp:001@on| on OK
+urn:ngsi-ld:Device:tractor001@start| start OK
 ```
 
-Once the lamp is switched on the luminosity level will alter dependent upon whether the internal motion sensor detects
+Once the lamp is switched on the location and activity of the tractor will alter dependent upon whether the internal GPS detects
 movement. The measurement is actively reported and requests to the IoT Broker can be seen on the device monitor page.
 
-### Switch off a Smart Lamp
+### Deactivate a Tractor
 
-This example shows how a real IoT Agent would send an Ultralight command to a **Smart Lamp** to switch it off. The
-**Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
+This example shows how a real IoT Agent would send an Ultralight command to a **Tractor** FMIS to return the vehicle to an idle state. The
+**Tractor** has already supplied an endpoint `/iot/tractor001` where it is listening for commands.
 
 #### :three: Request:
 
 ```console
 curl -iX POST \
-  --url 'http://localhost:3001/iot/lamp001' \
-  --data urn:ngsi-ld:Lamp:001@off
+  --url 'http://localhost:3001/iot/tractor001' \
+  --data urn:ngsi-ld:Device:tractor001@stop
 ```
 
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Lamp:001`) as held in the Context Broker and
-the name of the command (`off`) to invoke on the device.
+The body of the request consists of the `id` of the device (`urn:ngsi-ld:Device:tractor001`) as held in the Context Broker and
+the name of the command (`stop`) to invoke on the device.
 
 #### Response:
 
 The response returns the command and the result of the action.
 
 ```
-urn:ngsi-ld:Lamp:001@off| off OK
+urn:ngsi-ld:Device:tractor001@stop| stop OK
 ```
 
-Once the lamp is switched off the luminosity level does not alter. The latest Ultralight measurement (`s|OFF|l|0`) as
+Once the lamp is switched off the gps location does not alter. The latest Ultralight measurement (`s|IDLE|gps|13.36,52.515`) as
 sent to the IoT Broker can be seen on the device monitor page.
 
-To turn the **Smart Lamp** back on again repeat the following command:
+To turn the **Tractor** back on again repeat the following command:
 
 #### :four: Request:
 
 ```console
 curl -iX POST \
-  --url 'http://localhost:3001/iot/lamp001' \
-  --data urn:ngsi-ld:Lamp:001@on
+  --url 'http://localhost:3001/iot/tractor001' \
+  --data urn:ngsi-ld:Device:tractor001@start
 ```
 
 #### Response:
 
 ```
-urn:ngsi-ld:Lamp:001@on| on OK
+urn:ngsi-ld:Device:tractor001@start| start OK
 ```
 
-## Smart Door Commands
+## Filling Station Commands
 
-A **Smart Door** is an electronic door which can be sent commands to be locked or unlocked remotely. It can also report
-on its current state (`OPEN`, `CLOSED` or `LOCKED`),
+The **Filling Station** is an electronic device which can be sent a command to request that feed is added or removed from the silo. It can also report
+on its load level. In reality such a device would be connected to the FMIS to request that a worker fills the silo when it gets too low, but in this case we are treating the device as both a sensor and and actuator.
 
 Measurements will be sent to the IoT Agent as the state changes.
 
-### Unlock a Door
+### Remove Hay from the Barn
 
 This example shows how a real IoT Agent would send an Ultralight command to a **Smart Door** to unlock the door. The
 **Smart Door** has already supplied an endpoint `/iot/door001` where it is listening for commands.
@@ -475,43 +445,44 @@ This example shows how a real IoT Agent would send an Ultralight command to a **
 
 ```console
 curl -iX POST \
-  --url 'http://localhost:3001/iot/door001' \
-  --data urn:ngsi-ld:Door:001@unlock
+  --url 'http://localhost:3001/iot/filling001' \
+  --data urn:ngsi-ld:Device:filling001@remove
 ```
 
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and
-the name of the command (`unlock`) to invoke on the device.
+The body of the request consists of the `id` of the device (`urn:ngsi-ld:Device:filling001`) as held in the Context Broker and
+the name of the command (`remove`) to invoke on the device.
 
 #### Response:
 
 The response returns the command and the result of the action.
 
 ```
-urn:ngsi-ld:Door:001@unlock| unlock OK
+urn:ngsi-ld:Device:filling001@remove| remove OK
 ```
 
-Once the **Smart Door** is unlocked, it will automatically open and close as customers enter. The changes of state are
-actively reported to the IoT Broker, and the state of the **Smart Door** can be seen on the device monitor page.
+Once the command is sent, some time will pass and the level of the filling station will change. The changes of state are
+actively reported to the IoT Broker when they occur, and the updated state of the **FillingStation** can be seen on the device monitor page.
 
-The **Motion Sensor** within the store is not an actuator - it does not respond to commands, however it does actively
-measure the number of customers passing by. If the door is unlocked, the **Motion Sensor** will detect movement and send
-Ultralight measurements back up to the IoT Broker.
+The **SoilSensor**, **AnimalCollars** and **TemperatureSensors** found on the farm are not actuators since they do not respond to commands, however they does actively monitor and
+measures the state of things in the real world. If any of the other commands have been sent, the various dummy sensors will also start to respond.
 
-The Northbound HTTP requests generated by the **Motion Sensor** can be also viewed on the device monitor page.
+The Northbound HTTP requests generated by the sensors can be also viewed on the device monitor page.
 
-![](https://fiware.github.io/tutorials.IoT-Sensors/img/door-open.gif)
+![](https://fiware.github.io/tutorials.IoT-Sensors/img/device-measures.png)
 
-### Open a Door
+### Sending Measures
 
-This example shows how a real IoT Agent would send a command to a **Smart Door** to open the door. The **Smart Door**
-has already supplied an endpoint `/iot/door001` where it is listening for commands.
+This example simulates a request coming from the device `humidity001`
+
+The request to the previously provisioned resource `iot/d` is in UltraLight 2.0 format
+and identifies the device `humidity` and passes a known API key.
 
 #### :six: Request:
 
 ```console
-curl -iX POST \
-  --url 'http://localhost:3001/iot/door001' \
-  --data urn:ngsi-ld:Door:001@open
+curl -L -X POST 'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001' \
+-H 'Content-Type: text/plain' \
+--data-raw 'h|20'
 ```
 
 The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and
@@ -519,77 +490,7 @@ the name of the command (`open`) to invoke on the device.
 
 #### Response:
 
-The response returns the command and the result of the action.
-
-```
-urn:ngsi-ld:Door:001@open| open OK
-```
-
-The state of the **Smart Door** can be seen on the device monitor page. Customers may now enter and the **Motion
-Sensor** may pick up movement and send measurements to the IoT Broker.
-
-The Northbound HTTP requests generated by the **Smart Door** and the **Motion Sensor** can also be viewed on the device
-monitor page.
-
-### Close a Door
-
-This example shows how a real IoT Agent would send a command to a **Smart Door** to close the door. The **Smart Door**
-has already supplied an endpoint `/iot/door001` where it is listening for commands.
-
-#### :seven: Request:
-
-```console
-curl -iX POST \
-  --url 'http://localhost:3001/iot/door001' \
-  --data urn:ngsi-ld:Door:001@close
-```
-
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and
-the name of the command (`close`) to invoke on the device.
-
-#### Response:
-
-The response returns the command and the result of the action.
-
-```
-urn:ngsi-ld:Door:001@close| close OK
-```
-
-Since the door is currently unlocked, customers will continue to enter, and re-open the door themselves. If motion is
-detected, the **Motion Sensor** will send measurements to the IoT Broker.
-
-The Northbound HTTP requests generated by the **Motion Sensor** can also be viewed on the device monitor page.
-
-### Lock a Door
-
-This example shows how a real IoT Agent would send an Ultralight command to a Smart Door to lock the door. The Smart
-Door has already supplied an endpoint `/iot/door001` where it is listening for commands.
-
-#### :eight: Request:
-
-```console
-curl -iX POST \
-  --url 'http://localhost:3001/iot/door001' \
-  --data urn:ngsi-ld:Door:001@lock
-```
-
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and
-the name of the command (`lock`) to invoke on the device.
-
-#### Response:
-
-The response returns the command and the result of the action.
-
-```
-urn:ngsi-ld:Door:001@close| close OK
-```
-
-Once the door is locked, no further customers may enter. The **Motion Sensor** will report no further movement detected,
-the **Smart Door** cannot be opened manually and the **Smart Lamp** will slowly return to the ambient lighting level.
-
-The Northbound HTTP requests generated by the **Smart Lamp** can be viewed on the device monitor page.
-
-![](https://fiware.github.io/tutorials.IoT-Sensors/img/door-lock.gif)
+The example as written won't work unless the IoT Agent exists and is listening on the appropriate endpoint (`/iot/d`)  to process the measure. However this measure is the class of request generated by all Ultralight 2.0. sensors.
 
 # Next Steps
 

@@ -45,6 +45,8 @@ case "${command}" in
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		waitForOrion
+		export CONTEXT_BROKER=orion:1026
 		loadData
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;

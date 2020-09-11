@@ -20,30 +20,32 @@ version: "3.5"
 services:
   # Orion is the context broker
   orion:
-    image: fiware/orion:${ORION_VERSION}
+    image: fiware/orion-ld #:${ORION_LD_VERSION}
     hostname: orion
     container_name: fiware-orion
     depends_on:
       - mongo-db
     networks:
       - default
-    expose:
-      - "${ORION_PORT}"
     ports:
-      - "${ORION_PORT}:${ORION_PORT}" # localhost:1026
+      - "${ORION_LD_PORT}:${ORION_LD_PORT}" # localhost:1026
     command: -dbhost mongo-db -logLevel DEBUG
     healthcheck:
-      test: curl --fail -s http://orion:${ORION_PORT}/version || exit 1
+      test: curl --fail -s http://orion:${ORION_LD_PORT}/version || exit 1
 
   # Tutorial acts as a series of dummy IoT Sensors over HTTP
   tutorial:
-    image: fiware/tutorials.context-provider
+    image: fiware/tutorials.ngsi-ld
     hostname: tutorial
     container_name: fiware-tutorial
+    depends_on:
+      - orion
+      - mongo-db
     networks:
       default:
         aliases:
           - iot-sensors
+          - context
           - context-provider
     expose:
       - "${TUTORIAL_APP_PORT}"
@@ -52,17 +54,21 @@ services:
       - "${TUTORIAL_APP_PORT}:${TUTORIAL_APP_PORT}" # localhost:3000
       - "${TUTORIAL_DUMMY_DEVICE_PORT}:${TUTORIAL_DUMMY_DEVICE_PORT}" # localhost:3001
     environment:
-      - "DEBUG=tutorial:*"
-      - "WEB_APP_PORT=${TUTORIAL_APP_PORT}" # Port used by the content provider proxy and web-app for viewing data
-      - "IOTA_HTTP_HOST=iot-agent" #This is where the UltraLight IoT Agent will be listening in the next tutorial
-      - "IOTA_HTTP_PORT=${IOTA_SOUTH_PORT}" # Port used by the IoT Agent to be connected in the next tutorial
-      - "DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT}" # Port used by the dummy IOT devices to receive commands
-      - "DUMMY_DEVICES_TRANSPORT=HTTP" # Default transport used by dummy Io devices
-      - "DUMMY_DEVICES_API_KEY=4jggokgpepnvsb2uv4s40d59ov" # API Kye used by the dummy IOT devices in the next tutorial
-      - "CONTEXT_BROKER=http://orion:${ORION_PORT}/v2" # URL of the context broker to update context
-      - "OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>"
-      - "TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>"
-      - "TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>"
+      - DEBUG=tutorial:*
+      - WEB_APP_PORT=${TUTORIAL_APP_PORT} # Port used by the content provider proxy and web-app for viewing data
+      - IOTA_HTTP_HOST=iot-agent
+      - IOTA_HTTP_PORT=${IOTA_SOUTH_PORT}
+      - IOTA_DEFAULT_RESOURCE=/iot/d
+      - DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT} # Port used by the dummy IOT devices to receive commands
+      - DUMMY_DEVICES_TRANSPORT=HTTP # Default transport used by dummy Io devices
+      - CONTEXT_BROKER=http://orion:${ORION_LD_PORT}/ngsi-ld/v1 # URL of the context broker to update context
+      - DUMMY_DEVICES_API_KEY=4jggokgpepnvsb2uv4s40d59ov
+      - OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>
+      - TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>
+      - TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>
+      - MONGO_URL=mongodb://mongo-db:27017
+      - IOTA_JSON_LD_CONTEXT=http://context:3000/data-models/ngsi-context.jsonld
+      - NGSI_LD_TENANT=openiot
 
   # Database
   mongo-db:
