@@ -515,9 +515,6 @@ curl -L -X POST 'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humi
 --data-raw 'h|20'
 ```
 
-The body of the request consists of the `id` of the device (`urn:ngsi-ld:Door:001`) as held in the Context Broker and
-the name of the command (`open`) to invoke on the device.
-
 #### Response:
 
 The example as written won't work unless the IoT Agent exists and is listening on the appropriate endpoint (`/iot/d`) to
