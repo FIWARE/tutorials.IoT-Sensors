@@ -166,7 +166,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "urn:ngsi-ld:Device:filling001@empty"
+							"raw": "urn:ngsi-ld:Device:filling001@remove"
 						},
 						"url": {
 							"raw": "{{ultralight}}/iot/filling001",
@@ -302,12 +302,12 @@
 	],
 	"variable": [
 		{
-			"id": "e1ab27e1-4e4a-42b5-aca9-43399fff4177",
+			"id": "43bac45f-7927-49b4-aed2-c3cb2a29d5b8",
 			"key": "ultralight",
 			"value": "localhost:3001"
 		},
 		{
-			"id": "7d287f17-eb49-4204-9e77-61942c963598",
+			"id": "06916bf7-83fa-46d4-8364-352fecb801e4",
 			"key": "iot-agent-southport",
 			"value": "localhost:7896"
 		}
