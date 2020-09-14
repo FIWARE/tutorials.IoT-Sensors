@@ -15,7 +15,9 @@ defined in this tutorial is necessary before proceeding to connect the IoT devic
 real IoT Agent.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
-[Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/)
+[Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/ngsi-ld)
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1805fa92c4d6abaa374f)
 
 ## Contents
 
@@ -37,7 +39,9 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 -   [Communicating with IoT Devices](#communicating-with-iot-devices)
     -   [Irrigation System Commands](#irrigation-system-commands)
         -   [Turn on the Irrigation System](#turn-on-the-irrigation-system)
+        -   [Turn off the Irrigation System](#turn-off-the-irrigation-system)
     -   [Tractor Commands](#tractor-commands)
+    -   [FMIS System Commands](#fmis-system-commands)
         -   [Activate a Tractor](#activate-a-tractor)
         -   [Deactivate a Tractor](#deactivate-a-tractor)
     -   [Filling Station Commands](#filling-station-commands)
@@ -351,14 +355,15 @@ not supply any measurements from the real world.
 
 ### Turn on the Irrigation System
 
-This example shows how a real IoT Agent would send commands to an actuator. The **Bell** has supplied an endpoint
-`/iot/bell001` where it is listening for commands.
+This example shows how a real IoT Agent would send commands to an actuator. The **Irrigation System** has supplied an
+endpoint `/iot/water001` where it is listening for commands.
 
 #### :one: Request:
 
 ```console
 curl -iX POST 'localhost:3001/iot/water001' \
--H 'Content-Type: text/plain'
+-H 'Content-Type: text/plain' \
+--data-raw 'urn:ngsi-ld:Device:water001@on'
 ```
 
 #### Response:
@@ -376,12 +381,35 @@ If you are viewing the device monitor page, you can see the state of the water s
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/water-on.png)
 
+### Turn off the Irrigation System
+
+This example shows how to turn off the irrigation system. In this case, the device is also listening for multiple
+commands off a single endpoint and interpreting the payload body.
+
+#### :two: Request:
+
+```console
+curl -L -X POST 'localhost:3001/iot/water001' \
+-H 'Content-Type: text/plain' \
+--data-raw 'urn:ngsi-ld:Device:water001@off'
+```
+
+#### Response:
+
+```
+urn:ngsi-ld:Device:water001@off| off OK
+```
+
 ## Tractor Commands
 
 Using the simple **FMIS** system found within a Tractor can send tasks to the operator of the tractor - it can also
-report on the locationa and status of the vehicle.
+report on the location and status of the vehicle.
 
 Measurements will be returned to the IoT Agent as the state of work and location changes.
+
+## FMIS System Commands
+
+An **FMIS System** on the dashboard of a tractor is an example of a combined actuator and sensor.
 
 ### Activate a Tractor
 
@@ -389,7 +417,7 @@ This example shows how a real IoT Agent would send an Ultralight command to a **
 to an active state. The unit with the **Tractor** itself has already supplied an endpoint `/iot/tractor001` where it is
 listening for commands.
 
-#### :two: Request:
+#### :three: Request:
 
 ```console
 curl -iX POST \
@@ -408,16 +436,16 @@ The response returns the command and the result of the action.
 urn:ngsi-ld:Device:tractor001@start| start OK
 ```
 
-Once the lamp is switched on the location and activity of the tractor will alter dependent upon whether the internal GPS
-detects movement. The measurement is actively reported and requests to the IoT Broker can be seen on the device monitor
-page.
+Once the tractor is activated, the location and activity of the tractor will alter dependent upon whether the internal
+GPS detects movement. The measurement is actively reported and requests to the IoT Broker can be seen on the device
+monitor page.
 
 ### Deactivate a Tractor
 
 This example shows how a real IoT Agent would send an Ultralight command to a **Tractor** FMIS to return the vehicle to
 an idle state. The **Tractor** has already supplied an endpoint `/iot/tractor001` where it is listening for commands.
 
-#### :three: Request:
+#### :four: Request:
 
 ```console
 curl -iX POST \
@@ -441,7 +469,7 @@ Once the lamp is switched off the gps location does not alter. The latest Ultral
 
 To turn the **Tractor** back on again repeat the following command:
 
-#### :four: Request:
+#### :five: Request:
 
 ```console
 curl -iX POST \
@@ -466,8 +494,8 @@ Measurements will be sent to the IoT Agent as the state changes.
 
 ### Remove Hay from the Barn
 
-This example shows how a real IoT Agent would send an Ultralight command to a **Smart Door** to unlock the door. The
-**Smart Door** has already supplied an endpoint `/iot/door001` where it is listening for commands.
+This example shows how a real IoT Agent would send an Ultralight command to a **Filling Station** to unload the barn.
+The **Filling Station** has already supplied an endpoint `/iot/filling001` where it is listening for commands.
 
 #### :five: Request:
 
