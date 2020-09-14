@@ -80,7 +80,7 @@ tutorial:
 -   A **Motion Sensor** can be queried to return the number of people who have passed by since it was last reset
 -   A **Smart Lamp** can be switched on or off remotely. It can also report on its current state (`ON` or `OFF`). When
     switched on, a Motion Sensor within the device checks to see if light is needed and will dim if no-one is nearby.
-    Furthermore the device can be report on the current luminosity of the bulb.
+    Furthermore the device itself can measure the current luminosity of the bulb.
 
 As you can see, the **Bell** is an example of a pure actuator, as it only reacts to the given commands. Meanwhile the
 **Motion Sensor** is an example of a pure sensor, since it will only report on the state of the world as it sees it. The
