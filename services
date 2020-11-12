@@ -14,6 +14,7 @@ if (( $# != 1 )); then
 fi
 
 loadData () {
+	waitForContext
 	docker run --rm -v $(pwd)/import-data:/import-data \
 		--network fiware_default \
 		--entrypoint /bin/ash curlimages/curl import-data
@@ -23,6 +24,15 @@ loadData () {
 stoppingContainers () {
 	echo "Stopping containers"
 	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+}
+
+waitForContext () {
+	echo -e "\n⏳ Waiting for \033[1m@context\033[0m to be available\n"
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://context-provider:3000/data-models/ngsi-context.jsonld'` -eq 000 ]
+	do 
+	  echo -e "@context HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://context-provider:3000/data-models/ngsi-context.jsonld'` " (waiting for 200)"
+	  sleep 1
+	done
 }
 
 waitForOrion () {
