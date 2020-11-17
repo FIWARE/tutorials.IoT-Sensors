@@ -14,7 +14,7 @@
 このチュートリアルで定義されているすべての用語と概念を完全に理解する必要があります。
 
 このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、
-[Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/ngsi-ld) のドキュメントとしても利用できます。
+[Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/ngsi-ld.html) のドキュメントとしても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1805fa92c4d6abaa374f)
 
