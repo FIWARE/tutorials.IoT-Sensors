@@ -293,10 +293,10 @@ technology which allows to different components isolated into their respective e
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.IoT-Sensors/NGSI-LD/docker-compose.yml) is used
-configure the required services for the application. This means all container services can be brought up in a single
-command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users
-will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
+[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.IoT-Sensors/NGSI-LD/docker-compose.yml) is used configure
+the required services for the application. This means all container services can be brought up in a single command.
+Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users will need
+to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
 You can check your current **Docker** and **Docker Compose** versions using the following commands:
 
@@ -489,7 +489,8 @@ urn:ngsi-ld:Device:tractor001@start| start OK
 
 The **Filling Station** is an electronic device which can be sent a command to request that feed is added or removed
 from the silo. It can also report on its load level. In reality such a device would be connected to the FMIS to request
-that a worker fills the silo when it gets too low, but in this case we are treating the device as both a sensor and actuator.
+that a worker fills the silo when it gets too low, but in this case we are treating the device as both a sensor and
+actuator.
 
 Measurements will be sent to the IoT Agent as the state changes.
 
