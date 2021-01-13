@@ -495,7 +495,7 @@ El cuerpo de la petición está compuesto por el `id` del dispositivo (`urn:ngsi
 La respuesta devuelve el comando y el resultado de la acción.
 
 ```
-urn:ngsi-ld:Door:001@close| close OK
+urn:ngsi-ld:Door:001@lock| lock OK
 ```
 
 Una vez la puerta está bloqueada, no pueden entrar más clientes. El sensor de movimiento - **Motion Sensor** - no enviará ningún otra medida, la puerta inteligente - **Smart Door** - no podrá ser abierta manualemnte y la bombilla inteligente - **Smart Lamp** - volverá lentamente al nivel de luminosidad ambiente.
