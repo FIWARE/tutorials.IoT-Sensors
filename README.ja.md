@@ -710,7 +710,7 @@ curl -iX POST \
 レスポンスは、アクションのコマンドと結果を返します。
 
 ```
-urn:ngsi-ld:Door:001@close| close OK
+urn:ngsi-ld:Door:001@lock| lock OK
 ```
 
 ドアがロックされると、それ以上、顧客は入店できません。**モーション・センサ**はさ
