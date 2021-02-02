@@ -86,6 +86,8 @@ loadData () {
 	waitForContext
 	docker run --rm -v $(pwd)/import-data:/import-data \
 		--network fiware_default \
+		-e CONTEXT_BROKER=${CONTEXT_BROKER} \
+		-e TUTORIAL_DATA_MODELS_CONTEXT=${CONTEXT} \
 		--entrypoint /bin/ash curlimages/curl import-data
 	echo ""
 }
