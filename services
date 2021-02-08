@@ -94,7 +94,7 @@ loadData () {
 
 stoppingContainers () {
 	echo "Stopping containers"
-	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+	docker-compose --env-file=.env --log-level ERROR -p fiware down -v --remove-orphans
 }
 
 
@@ -108,7 +108,7 @@ case "${command}" in
 		echo -e "Starting one container \033[1mTutorial\033[0m"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
-		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		docker-compose --env-file=.env --log-level ERROR -p fiware up -d --remove-orphans
 		waitForMongo
 		waitForOrion
 		export CONTEXT_BROKER=orion:1026
@@ -120,7 +120,7 @@ case "${command}" in
 		;;
 	"create")
 		echo "Pulling Docker images"
-		docker-compose --log-level ERROR -p fiware pull
+		docker-compose --env-file=.env --log-level ERROR -p fiware pull
 		;;
 	*)
 		echo "Command not Found."
