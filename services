@@ -36,8 +36,7 @@ getHeartbeat(){
 
 waitForOrion () {
 	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
-	getHeartbeat "${ORION}"
-	while [ "${response}" -eq 000 ]
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-orion` == "healthy" ]
 	do
 		echo -e "\nContext Broker HTTP state: ${response} (waiting for 200)"
 		pause 6
@@ -97,6 +96,11 @@ stoppingContainers () {
 	docker-compose --env-file=.env --log-level ERROR -p fiware down -v --remove-orphans
 }
 
+displayServices () {
+	echo ""
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	echo ""
+}
 
 command="$1"
 case "${command}" in
@@ -113,6 +117,7 @@ case "${command}" in
 		waitForOrion
 		export CONTEXT_BROKER=orion:1026
 		loadData
+		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
