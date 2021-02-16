@@ -54,7 +54,8 @@ case "${command}" in
 	"help")
         echo "usage: services [create|start|stop]"
         ;;
-    "start")
+	"start")
+		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		echo -e "Starting one container \033[1mTutorial\033[0m"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
@@ -67,9 +68,11 @@ case "${command}" in
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
+		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		;;
 	"create")
+		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker-compose --log-level ERROR -p fiware pull
 		;;
