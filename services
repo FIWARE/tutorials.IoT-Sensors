@@ -107,7 +107,8 @@ case "${command}" in
 	"help")
         echo "usage: services [create|start|stop]"
         ;;
-    "start")
+	"start")
+		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		echo -e "Starting one container \033[1mTutorial\033[0m"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
