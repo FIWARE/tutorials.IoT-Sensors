@@ -21,8 +21,8 @@ loadData () {
 }
 
 stoppingContainers () {
-	echo "Stopping containers"
-	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+	echo "Stopping running containers"
+	docker compose -p fiware down -v --remove-orphans
 }
 
 displayServices () {
@@ -60,7 +60,7 @@ case "${command}" in
 		echo -e "Starting one container \033[1mTutorial\033[0m"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
-		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		docker compose -p fiware up -d --remove-orphans
 		waitForMongo
 		waitForOrion
 		loadData
@@ -75,7 +75,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull curlimages/curl
-		docker-compose --log-level ERROR -p fiware pull
+		docker compose -p fiware pull
 		;;
 	*)
 		echo "Command not Found."
