@@ -3,11 +3,9 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
-[![NGSI v2](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
 [![UltraLight 2.0](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 <!-- prettier-ignore -->
 
@@ -362,7 +360,7 @@ tutorial:
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行する
 ためのツールです
-。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.IoT-Sensors/master/docker-compose.yml)
+。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.IoT-Sensors/NGSI-v2/docker-compose.yml)
 ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つ
 まり、すべてのコンテナ・サービスは 1 つのコマンドで呼び出すことができます
 。Docker Compose は、デフォルトで Docker for Windows と D ocker for Mac の一部と
@@ -378,7 +376,7 @@ docker-compose -v
 docker version
 ```
 
-Docker バージョン 18.03 以降と Docker Compose 1.29 以上を使用していることを確認
+Docker バージョン 20.10 以降と Docker Compose 1.29 以上を使用していることを確認
 し、必要に応じてアップグレードしてください。
 
 <a name="cygwin"></a>
@@ -729,10 +727,10 @@ urn:ngsi-ld:Door:001@lock| lock OK
 高度な機能を追加することで、アプリケーションに機能を追加する方法を知りたいですか
 ？ このシリーズ
 の[他のチュートリアル](https://www.letsfiware.jp/fiware-tutorials)を読むことで見
-つけることができます :
+つけることができます
 
 ---
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2022 FIWARE Foundation e.V.
