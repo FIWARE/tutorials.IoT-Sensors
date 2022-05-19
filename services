@@ -15,7 +15,7 @@
 
 set -e
 
-SCORPIO="http://scorpio:9090/scorpio/v1/info/"
+SCORPIO="http://scorpio:9090/scorpio/"
 ORION="http://orion:1026/version"
 CONTEXT="http://context/ngsi-context.jsonld"
 
@@ -63,13 +63,6 @@ waitForScorpio () {
 	while [ "${response}" -eq 000 ]
 	do
 		echo -e "Context Broker HTTP state: ${response} (waiting for 500)"
-		pause 60
-		getHeartbeat "${SCORPIO}"
-	done
-	echo -e "\n⏳ Waiting for all \033[1;34mScorpio\033[0m services to be fully available\n"
-	while [ "$response" -eq 500 ]
-	do
-		echo -e "Context Broker HTTP state: ${response} (waiting for 200)"
 		pause 60
 		getHeartbeat "${SCORPIO}"
 	done
