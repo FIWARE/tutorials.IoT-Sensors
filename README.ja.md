@@ -16,6 +16,7 @@
 [Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/ngsi-ld.html) のドキュメントとしても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1805fa92c4d6abaa374f)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)
 
 ## コンテンツ
 
