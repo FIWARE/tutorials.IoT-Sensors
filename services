@@ -18,6 +18,7 @@ set -e
 SCORPIO="http://scorpio:9090/scorpio/"
 ORION="http://orion:1026/version"
 CONTEXT="http://context/ngsi-context.jsonld"
+CORE_CONTEXT="https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
 
 dockerCmd="docker compose"
 if (( $# == 2 )); then
@@ -68,8 +69,19 @@ waitForScorpio () {
 	done
 }
 
-waitForContext () {
-	echo -e "\n⏳ Waiting for \033[1m@context\033[0m to be available\n"
+waitForCoreContext () {
+	echo -e "\n⏳ Checking availability of \033[1m core @context\033[0m from ETSI\n"
+	eval "response=$(docker run --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
+		pause 3
+		eval "response=$(docker run --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+	done
+}
+
+waitForUserContext () {
+	echo -e "\n⏳ Waiting for user \033[1m@context\033[0m to be available\n"
 	getHeartbeat "${CONTEXT}"
 	while [ "${response}" -eq 000 ]
 	do
@@ -88,7 +100,7 @@ waitForMongo () {
 }
 
 loadData () {
-	waitForContext
+	waitForUserContext
 	docker run --rm -v $(pwd)/import-data:/import-data \
 		--network fiware_default \
 		-e CONTEXT_BROKER=${CONTEXT_BROKER} \
@@ -118,6 +130,7 @@ case "${command}" in
 	"start")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
+		waitForCoreContext
 		echo -e "Starting one container \033[1mTutorial\033[0m"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
