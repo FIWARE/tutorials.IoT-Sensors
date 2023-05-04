@@ -277,7 +277,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.context-provider
+    image: quay.io/fiware/tutorials.context-provider
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:

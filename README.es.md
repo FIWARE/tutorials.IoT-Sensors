@@ -183,7 +183,7 @@ La información de configuración necesaria se puede ver en la sección de servi
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.context-provider
+    image: quay.io/fiware/tutorials.context-provider
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:
