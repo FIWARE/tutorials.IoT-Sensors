@@ -237,7 +237,7 @@ HTTP POST も使用できます。この場合もパスは `/iot/d` になりま
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.ngsi-ld
+    image: quay.io/fiware/tutorials.ngsi-ld
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:
