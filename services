@@ -118,7 +118,7 @@ stoppingContainers () {
 
 displayServices () {
 	echo ""
-	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name="$1"
 	echo ""
 }
 
@@ -139,7 +139,7 @@ case "${command}" in
 		waitForOrion
 		export CONTEXT_BROKER=orion:1026
 		loadData
-		displayServices
+		displayServices "fiware"
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
