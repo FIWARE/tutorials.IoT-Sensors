@@ -296,7 +296,7 @@ Una campana - o **Bell** - es un ejemplo de actuador. Puede responder a comandos
 
 Este ejemplo muestra cómo un verdadero agente IoT enviaría comandos a un actuador. La campana - **Bell** - ha provisto un endpoint, `/iot/bell001` donde escucha los comandos.
 
-#### :one: Petición:
+#### 1️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -327,7 +327,7 @@ Las mediciones se enviarán al agente IoT a medida que cambie el estado y/o la l
 
 Este ejemplo muestra como un agente IoT real enviaría un comando Ultralight a una bombilla inteligente - **Smart Lamp** - para encenderla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
 
-#### :two: Petición:
+#### 2️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -351,7 +351,7 @@ Una vez la lámpara se enciende, el nivel de luminosidad se altera dependiendo d
 
 Este ejemplo muestra como un agente IoT real enviaría un comando Ultralight a una bombilla inteligente - **Smart Lamp** - para apagarla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
 
-#### :three: Petición:
+#### 3️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -373,7 +373,7 @@ Una vez la lámpara es apagada, el nivel de luminosidad no se altera. La última
 
 Para encender la bombilla inteligente - **Smart Lamp** - de nuevo podemos repetir el siguiente comando:
 
-#### :four: Petición:
+#### 4️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -397,7 +397,7 @@ Las mediciones se enviarán al agente IoT a medida que cambie el estado.
 
 Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para desbloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
-#### :five: Petición:
+#### 5️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -427,7 +427,7 @@ Las peticiones enviadas hacia el norte, generadas por el sensor de movimiento, t
 
 Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para abrir la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
-#### :six: Petición:
+#### 6️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -453,7 +453,7 @@ Las peticiones enviadas hacia el norte, generadas por la puerta inteligente - **
 
 Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para cerrar la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
-#### :seven: Petición:
+#### 7️⃣  Petición:
 
 ```console
 curl -iX POST \
@@ -480,7 +480,7 @@ Las peticiones enviadas hacia el norte, generadas por el sensor de movimiento - 
 Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para bloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
 
-#### :eight: Petición:
+#### 8️⃣  Petición:
 
 ```console
 curl -iX POST \
