@@ -329,7 +329,8 @@ git checkout NGSI-LD
 This command will also import seed data from the previous
 [Farm Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
-> :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
+> [!NOTE]
+> If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
 > ./services stop
@@ -360,7 +361,7 @@ not supply any measurements from the real world.
 This example shows how a real IoT Agent would send commands to an actuator. The **Irrigation System** has supplied an
 endpoint `/iot/water001` where it is listening for commands.
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -iX POST 'localhost:3001/iot/water001' \
@@ -388,7 +389,7 @@ If you are viewing the device monitor page, you can see the state of the water s
 This example shows how to turn off the irrigation system. In this case, the device is also listening for multiple
 commands off a single endpoint and interpreting the payload body.
 
-#### :two: Request:
+#### 2️⃣ Request:
 
 ```console
 curl -L -X POST 'localhost:3001/iot/water001' \
@@ -419,7 +420,7 @@ This example shows how a real IoT Agent would send an Ultralight command to a **
 to an active state. The unit with the **Tractor** itself has already supplied an endpoint `/iot/tractor001` where it is
 listening for commands.
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -447,7 +448,7 @@ monitor page.
 This example shows how a real IoT Agent would send an Ultralight command to a **Tractor** FMIS to return the vehicle to
 an idle state. The **Tractor** has already supplied an endpoint `/iot/tractor001` where it is listening for commands.
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -471,7 +472,7 @@ Once the lamp is switched off the gps location does not alter. The latest Ultral
 
 To turn the **Tractor** back on again repeat the following command:
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -499,7 +500,7 @@ Measurements will be sent to the IoT Agent as the state changes.
 This example shows how a real IoT Agent would send an Ultralight command to a **Filling Station** to unload the barn.
 The **Filling Station** has already supplied an endpoint `/iot/filling001` where it is listening for commands.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -537,7 +538,7 @@ This example simulates a request coming from the device `humidity001`
 The request to the previously provisioned resource `iot/d` is in UltraLight 2.0 format and identifies the device
 `humidity` and passes a known API key.
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -L -X POST 'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001' \

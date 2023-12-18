@@ -390,7 +390,7 @@ cUrl コマンドを入力する前にオーディオを有効にしてくださ
 この例は、実際の IoT Agent がコマンドをアクチュエータに送信する方法を示しています。**Irrigation System** は、
 エンドポイント `/iot/water001` を提供し、コマンドを待機しています。
 
-#### :one: リクエスト:
+#### 1️⃣ リクエスト:
 
 ```console
 curl -iX POST 'localhost:3001/iot/water001' \
@@ -420,7 +420,7 @@ urn:ngsi-ld:Device:water001@on| on OK
 この例は、irrigation system をオフにする方法を示しています。この場合、デバイスは単一のエンドポイントから
 複数のコマンドをリッスンし、ペイロード・ボディを解釈します。
 
-#### :two: リクエスト:
+#### 2️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'localhost:3001/iot/water001' \
@@ -457,7 +457,7 @@ Tractor のダッシュボードの **FMIS System** は、アクチュエータ�
 移行する方法を示しています。**Tractor** 自体を備えたユニットは、コマンドを待機するエンドポイント `/iot/tractor001`
 をすでに提供しています。
 
-#### :three: リクエスト:
+#### 3️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -486,7 +486,7 @@ Tractor が作動すると、内部 GPS が動きを検出するかどうかに�
 この例は、実際の IoT Agent が Ultralight コマンドを **Tractor** FMIS に送信して、車両をアイドル状態に戻す方法を
 示しています。**Tractor** はすでにエンドポイント `/iot/tractor001` を提供していて、コマンドを待機しています。
 
-#### :four: リクエスト:
+#### 4️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -510,7 +510,7 @@ urn:ngsi-ld:Device:tractor001@stop| stop OK
 
 **Tractor** を再びオンにするには、次のコマンドを繰り返します:
 
-#### :five: リクエスト:
+#### 5️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -542,7 +542,7 @@ urn:ngsi-ld:Device:tractor001@start| start OK
 この例は、実際の IoT Agent が Ultralight コマンドを **Filling Station** に送信して、納屋から干し草を取り除く方法を
 示しています。**Filling Station** は、すでにエンドポイント `/iot/filling001` を提供していて、コマンドを待機しています。
 
-#### :five: リクエスト:
+#### 5️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -581,7 +581,7 @@ urn:ngsi-ld:Device:filling001@remove| remove OK
 以前にプロビジョニングされたリソース `iot/d` へのリクエストは UltraLight 2.0 形式であり、デバイスの `humidity`
 (湿度) を識別し、既知の API キーを渡します。
 
-#### :six: リクエスト:
+#### 6️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001' \
