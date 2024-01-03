@@ -1,20 +1,12 @@
 #!/bin/bash
 #
 #  Command Line Interface to start all services associated with the Tutorial
-#  For this tutorial the commands are merely a convenience script to run docker or docker-compose
+#  For this tutorial the commands are merely a convenience script to run docker-compose
 #
-#  Each services script can be run using either docker-compose (the external tool with the hyphen -) 
-#  or docker compose (the newer version directly bundled with Docker with a space )
-#
-#  if you start up with the following command:
-#
-#  ./services start legacy
-#
-# This will force the script to use docker-compose which may be more reliable in 
-# some cases (or if an older version of Docker is being used)
 
 set -e
 
+STELLIO="http://stellio:8080/actuator/health"
 SCORPIO="http://scorpio:9090/scorpio/"
 ORION="http://orion:1026/version"
 CONTEXT="http://context/ngsi-context.jsonld"
@@ -26,9 +18,9 @@ if (( $# == 2 )); then
 fi
 
 if (( $# < 1 )); then
-    echo "Illegal number of parameters"
-    echo "usage: services [create|start|stop]"
-    exit 1
+	echo "Illegal number of parameters"
+	echo "usage: services [create|orion|scorpio|stellio|stop]"
+	exit 1
 fi
 
 pause(){
@@ -50,6 +42,7 @@ getHeartbeat(){
 
 waitForOrion () {
 	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
+	
 	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-orion` == "healthy" ]
 	do
 		echo -e "\nContext Broker HTTP state: ${response} (waiting for 200)"
@@ -66,6 +59,24 @@ waitForScorpio () {
 		echo -e "Context Broker HTTP state: ${response} (waiting for 500)"
 		pause 6
 		getHeartbeat "${SCORPIO}"
+	done
+}
+
+waitForStellio () {
+	echo -e "\n⏳ Waiting for \033[1;34mStellio\033[0m to respond\n"
+	waitSeconds=30
+	while [ `docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 000 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 500)"
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
+	done
+	echo -e "\n⏳ Waiting for all \033[1;34mStellio\033[0m services to be available\n"
+	while [ `docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 500 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
 	done
 }
 
@@ -101,63 +112,166 @@ waitForMongo () {
 
 loadData () {
 	waitForUserContext
+	export CONTEXT_BROKER="$1" 
 	docker run --rm -v $(pwd)/import-data:/import-data \
 		--network fiware_default \
 		-e CONTEXT_BROKER=${CONTEXT_BROKER} \
-		-e TUTORIAL_DATA_MODELS_CONTEXT=${CONTEXT} \
+		-e TUTORIAL_DATA_MODELS_CONTEXT="http://context/ngsi-context.jsonld" \
+		-e PIG_COUNT=${PIG_COUNT:-4} \
+		-e COW_COUNT=${COW_COUNT:-4} \
 		--entrypoint /bin/ash quay.io/curl/curl:${CURL_VERSION} /import-data
 	echo ""
 }
 
 stoppingContainers () {
-	echo -e "Force removal of \033[1mmqtt-subscriber\033[0m"
-	(docker stop mqtt-subscriber &>/dev/null) || (echo -e "\033[1mmqtt-subscriber\033[0m not running")
-	echo "Stopping containers"
-	${dockerCmd} down -v --remove-orphans
+	CONTAINERS=$(docker ps --filter "label=org.fiware=tutorial" -aq)
+	if [[ -n $CONTAINERS ]]; then 
+		echo "Stopping containers"
+		docker rm -f $CONTAINERS || true
+	fi
+	VOLUMES=$(docker volume ls -qf dangling=true) 
+	if [[ -n $VOLUMES ]]; then 
+		echo "Removing old volumes"
+		docker volume rm $VOLUMES || true
+	fi
+	NETWORKS=$(docker network ls  --filter "label=org.fiware=tutorial" -q) 
+	if [[ -n $NETWORKS ]]; then 
+		echo "Removing tutorial networks"
+		docker network rm $NETWORKS || true
+	fi
 }
 
 displayServices () {
 	echo ""
 	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name="$1"
+
 	echo ""
+}
+
+addDatabaseIndex () {
+	printf "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;34mOrion\033[0m  ..."
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();db.createCollection("orion");
+	db = conn.getDB("orion");
+	db.createCollection("entities");
+	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
+	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.id": 1});' > /dev/null
+
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();db.createCollection("orion-openiot");
+	db = conn.getDB("orion-openiot");
+	db.createCollection("entities");
+	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
+	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.id": 1});' > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
+
+	printf "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;36mIoT-Agent\033[0m  ..."
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();
+	db = conn.getDB("iotagentul");
+	db.getCollectionNames().forEach(c=>db[c].drop());
+	db.createCollection("devices");
+	db.devices.createIndex({"_id.service": 1, "_id.id": 1, "_id.type": 1});
+	db.devices.createIndex({"_id.type": 1}); 
+	db.devices.createIndex({"_id.id": 1});
+	db.createCollection("groups");
+	db.groups.createIndex({"_id.resource": 1, "_id.apikey": 1, "_id.service": 1});
+	db.groups.createIndex({"_id.type": 1});' > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
+}
+
+addIoTDatabaseIndex () {
+	printf "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;36mIoT-Agent\033[0m  ..."
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();
+	db = conn.getDB("iotagentul");
+	db.getCollectionNames().forEach(c=>db[c].drop());
+	db.createCollection("devices");
+	db.devices.createIndex({"_id.service": 1, "_id.id": 1, "_id.type": 1});
+	db.devices.createIndex({"_id.type": 1});
+	db.devices.createIndex({"_id.id": 1});
+	db.createCollection("groups");
+	db.groups.createIndex({"_id.resource": 1, "_id.apikey": 1, "_id.service": 1});
+	db.groups.createIndex({"_id.type": 1});' > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
 }
 
 command="$1"
 case "${command}" in
 	"help")
-        echo "usage: services [create|start|stop]"
+        echo "usage: services [create|orion|scorpio|stellio|stop]"
         ;;
-	"start")
+	 "orion")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		waitForCoreContext
-		echo -e "Starting one container \033[1mTutorial\033[0m"
-		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
+		echo -e "Starting containers:  \033[1;34mOrion\033[0m, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1mTutorial\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;34mOrion\033[0m is the context broker"
+		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		echo ""
-		${dockerCmd} up -d --remove-orphans
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml -p fiware up -d --renew-anon-volumes
+		displayServices "orion|fiware"
 		waitForMongo
+		addDatabaseIndex
 		waitForOrion
-		export CONTEXT_BROKER=orion:1026
-		loadData
-		displayServices "fiware"
+		loadData orion:1026
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
+		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
+		;;
+
+	"scorpio")
+		export $(cat .env | grep "#" -v)
+		stoppingContainers
+		waitForCoreContext
+		echo -e "Starting containers:  \033[1;34mScorpio\033[0m, and a \033[1mPostgres\033[0m database, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1mTutorial\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;Scorpio\033[0m is the context broker"
+		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
+		echo ""
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio.yml -p fiware up -d --remove-orphans --renew-anon-volumes
+		displayServices "scorpio|fiware"
+		waitForMongo
+		addIoTDatabaseIndex
+		waitForScorpio
+		loadData scorpio:9090
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
+		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
+		;;
+	"stellio")
+		export $(cat .env | grep "#" -v)
+		stoppingContainers
+		waitForCoreContext
+		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and a \033[1mPostgres\033[0m database, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1mTutorial\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;Stellio\033[0m is the context broker"
+		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
+		echo ""
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/stellio.yml -p fiware up -d --remove-orphans --renew-anon-volumes
+		displayServices "stellio|fiware"
+		waitForMongo
+		addIoTDatabaseIndex
+		waitForStellio
+		loadData stellio:8080
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		echo -e "Now open \033[4mhttp://localhost:3000/device/monitor\033[0m"
 		;;
 	"stop")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		;;
-	"create")
+	"start")
+		export $(cat .env | grep "#" -v)
+		./services ${CONTEXT_BROKER:=orion} $2
+ 		;;
+ 	"create")
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull -q quay.io/curl/curl:${CURL_VERSION}
-		${dockerCmd} pull --ignore-pull-failures
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/common.yml -f docker-compose/scorpio.yml -f docker-compose/orion-ld.yml -f docker-compose/stellio.yml pull
 		;;
 	*)
 		echo "Command not Found."
-		echo "usage: services [create|start|stop]"
+		echo "usage: services [create|orion|scorpio|stellio|stop]"
 		exit 127;
 		;;
 esac
-
-
-
