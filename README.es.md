@@ -42,7 +42,7 @@ A lo largo de este tutorial se usan comandos [cUrl](https://ec.haxx.se/), pero t
 -   [Arquitectura](#arquitectura)
 -   [Prerequisitos](#prerequisitos)
     -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
+    -   [WSL](#wsl)
 -   [Inicio](#inicio)
 -   [Comunicando con los dispositivos IoT](#comunicando-con-los-dispositivos-iot)
     -   [Comandos de campana](#comandos-de-campana)
@@ -253,9 +253,9 @@ docker version
 
 Por favor, asegúrese de que está utilizando la versión 18.03 o superior de Docker y la versión 1.21 o superior de Docker Compose y actualícela si es necesario.
 
-## Cygwin
+## WSL
 
-Comenzaremos nuestros servicios usando una simple consola de comando - o bash script. Los usuarios de Windows deben descargar [cygwin](http://www.cygwin.com/) para proporcionar una funcionalidad de línea de comandos similar a la de una distribución de Linux en Windows.
+Comenzaremos nuestros servicios usando una simple consola de comando - o bash script. Los usuarios de Windows deben descargar the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) para proporcionar una funcionalidad de línea de comandos similar a la de una distribución de Linux en Windows.
 
 # Inicio
 
