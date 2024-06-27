@@ -507,7 +507,7 @@ Measurements will be sent to the IoT Agent as the state changes.
 This example shows how a real IoT Agent would send an Ultralight command to a **Filling Station** to unload the barn.
 The **Filling Station** has already supplied an endpoint `/iot/filling001` where it is listening for commands.
 
-#### 5️⃣ Request:
+#### 6️⃣ Request:
 
 ```console
 curl -iX POST \

@@ -540,7 +540,7 @@ urn:ngsi-ld:Device:tractor001@start| start OK
 この例は、実際の IoT Agent が Ultralight コマンドを **Filling Station** に送信して、納屋から干し草を取り除く方法を
 示しています。**Filling Station** は、すでにエンドポイント `/iot/filling001` を提供していて、コマンドを待機しています。
 
-#### 5️⃣ リクエスト:
+#### 6️⃣ リクエスト:
 
 ```console
 curl -iX POST \
