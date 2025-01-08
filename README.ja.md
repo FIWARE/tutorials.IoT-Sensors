@@ -731,4 +731,4 @@ urn:ngsi-ld:Door:001@lock| lock OK
 
 ## License
 
-[MIT](LICENSE) © 2018-2024 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2025 FIWARE Foundation e.V.
