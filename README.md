@@ -548,7 +548,8 @@ The request to the previously provisioned resource `iot/d` is in UltraLight 2.0 
 #### 6️⃣ Request:
 
 ```console
-curl -L -X POST 'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001' \
+curl -L -X POST \
+  'http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001' \
 -H 'Content-Type: text/plain' \
 --data-raw 'h|20'
 ```
