@@ -602,4 +602,4 @@ IoT Agent が存在し、適切なエンドポイント (`/iot/d`) でリッス�
 
 ## License
 
-[MIT](LICENSE) © 2020-2025 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020-2026 FIWARE Foundation e.V.
