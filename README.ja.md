@@ -3,11 +3,11 @@
 [![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-[![UltraLight 2.0](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![JSON](https://img.shields.io/badge/Payload-JSON-27ae60.svg)](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 このチュートリアルは、IoT デバイスの概要と、制約のあるデバイスでの
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 プロトコルの使用法です。このチュートリアルでは、一連のダミー農業 IoT デバイスを紹介します。これは、ブラウザー内に表示され、
 ユーザがそれらを操作できるようにします。実際の IoT Agent を介して IoT デバイスを NGSI-LD Context Broker に接続する前に、
 このチュートリアルで定義されているすべての用語と概念を完全に理解する必要があります。
@@ -24,7 +24,7 @@
 <summary><strong>詳細</strong></summary>
 
 -   [IoT デバイスとは何ですか ?](#what-are-iot-devices)
--   [Ultralight 2.0 とは何ですか ?](#what-is-ultralight-20)
+-   [JSON とは何ですか ?](#what-is-ultralight-20)
     -   [サウスバウンド・トラフィック (コマンド)](#southbound-traffic-commands)
         -   [HTTP POST を使用したコマンドのプッシュ](#push-command-using-http-post)
     -   [ノースバウンド・トラフィック (測定値)](#northbound-traffic-measurements)
@@ -91,28 +91,28 @@ IoT デバイスは、単純なものから複雑なものまでさまざまで�
 
 <a name="what-is-ultralight-20"/>
 
-# Ultralight 2.0 とは何ですか ?
+# JSON とは何ですか ?
 
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 は、帯域幅とデバイスのメモリ・リソースが制限されている制約されたデバイスと通信用の軽量テキスト・ベースのプロトコルです。
 測定リクエストのペイロードは、パイプ `|` 文字で区切られたキーと値のペアのリストです。
 
 例えば、
 
 ```
-<key>|<value>|<key>|<value>|<key>|<value> etc..
+{"<key>":"<value>", "<key>":"<value>", "<key>":"<value>"}
 ```
 
 たとえば、次のようなペイロード:
 
 ```
-t|15|k|abc
+{"t":15,"k":"abc"}
 ```
 
 2つの属性が含まれ、1つは値が "15" の "t" という名前で、もう1つは値 "abc" の "k" という名前で送信されます。
-Ultralight 2.0 の値はタイプされません (すべてが文字列として扱われます)。
+JSON の値はタイプされません (すべてが文字列として扱われます)。
 
-Ultralight 2.0 は、デバイスとサーバ間で共有する測定とコマンドを記述するペイロードを定義しますが、単一のトランスポート・
+JSON は、デバイスとサーバ間で共有する測定とコマンドを記述するペイロードを定義しますが、単一のトランスポート・
 プロトコルを指定しません。代わりに、さまざまなシナリオでさまざまなトランスポート・プロトコル・バインディング
 (HTTP, MQTT, AMQP などを使用できます。このチュートリアルでは、HTTP をトランスポート・プロトコルとして使用します。
 
@@ -134,7 +134,7 @@ IoT Agent と IoT デバイス間のサウスバウンド通信のセットア�
 コマンドを認識しています。コマンドをデバイスに送信するために、IoT Agent は POST リクエストをデバイスが提供する
 エンドポイントに送信します。POST リクエストのボディにはコマンドが含まれています。
 
-Ultralight コマンドのペイロードの形式は次のとおりです :
+JSON コマンドのペイロードの形式は次のとおりです :
 
 ```
 <device name>@<command>|<param|<param>
@@ -144,7 +144,7 @@ Ultralight コマンドのペイロードの形式は次のとおりです :
 コマンドの1つであり、追加の必要な値は後続のパラメータで渡されます。たとえば、
 
 ```
-urn:ngsi-ld:Robot:001@turn|left|30
+{"urn:ngsi-ld:Robot:001": {"turn": "left"}}
 ```
 
 これは、「私は Context Broker 内で `id="urn:ngsi-ld:Robot:001"` として知られています。このエンドポイントをリッスン
@@ -154,7 +154,7 @@ urn:ngsi-ld:Robot:001@turn|left|30
 IoT Agent に対する定義済みのノースバウンドのレスポンスは次のとおりです:
 
 ```
-urn:ngsi-ld:Robot:001@turn|Turn ok
+{"urn:ngsi-ld:Robot:001": {"turn": "Turn ok"}}
 ```
 
 これは、「私は、Context Broker 内の `id="urn:ngsi-ld:Robot:001"` として知られているエンティティからのリクエストに
@@ -187,14 +187,14 @@ IoT Agent に新しい測定値を報告できます:
 -   `i` (device ID): デバイス ID (API キーに固有)
 -   `k` (API Key): デバイスが登録されているサービスの API キー
 -   `t` (timestamp): 測定のタイムスタンプ。自動 IoTAgent タイムスタンプを上書きします (オプション)
--   `d` (Data): Ultralight 2.0 ペイロード
+-   `d` (Data): JSON ペイロード
 
 `i` と `k` パラメータは必須です。
 
 たとえば、リクエスト:
 
 ```
-<iot-agent>/iot/d?i=humidity001&d=h|12
+<iot-agent>/iot/json?i=humidity001&d={"h":12}
 ```
 
 これは、デバイス `id=motion001` が、値 `12` で実際の測定 `h` を実行したことを IoT Agent に通知したいことを示します。
@@ -216,7 +216,7 @@ HTTP POST も使用できます。この場合もパスは `/iot/d` になりま
 #### デバイス・モニタ
 
 このチュートリアルでは、一連のダミー IoT デバイスが作成され、最終的には Context Broker に接続されます。
-各デバイスの状態は、次の場所にある UltraLight デバイス・モニタの Web ページで確認できます:
+各デバイスの状態は、次の場所にある JSON デバイス・モニタの Web ページで確認できます:
 `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/farm-devices.png)
@@ -227,7 +227,7 @@ HTTP POST も使用できます。この場合もパスは `/iot/d` になりま
 
 デモ・アプリケーションは、ダミーの IoT デバイスのセットとして機能する単一のカスタム・コンポーネントのみを使用します。
 すべての IoT デバイスは、HTTP で実行される
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 プロトコルを使用します。すべての対話は HTTP リクエストによって開始されるため、エンティティをコンテナ化し、
 公開されたポートから実行できます。
 
@@ -261,7 +261,7 @@ tutorial:
 
 -   Port `3000` は、公開されているので、ダミーの IoT デバイスを表示する Web ページを見ることができます
 -   Port `3001` は、純粋にチュートリアル・アクセスのために公開されています。cUrl または Postman
-    が同じネットワークに属さなくても UltraLight コマンドを作成できるようにするためです
+    が同じネットワークに属さなくても JSON コマンドを作成できるようにするためです
 
 次に示すように、`tutorial` コンテナは環境変数によって駆動されます:
 
@@ -270,9 +270,9 @@ tutorial:
 | DEBUG                 | `tutorial:*`                 | ロギングに使用されるデバッグ・フラグ                                                                                                                                                |
 | WEB_APP_PORT          | `3000`                       | ダミー・デバイスのデータを表示する Web アプリが使用するポート                                                                                                                       |
 | IOTA_HTTP_HOST        | `iot-agent`                  | 欠落している IoT Agent のホスト名 - 後のチュートリアルで使用                                                                                                                        |
-| IOTA_HTTP_PORT        | `7896`                       | 欠落している IoT Agent がリッスンするポート。`7896` は、UltraLight over HTTP の一般的なデフォルトです                                                                               |
+| IOTA_HTTP_PORT        | `7896`                       | 欠落している IoT Agent がリッスンするポート。`7896` は、JSON over HTTP の一般的なデフォルトです                                                                               |
 | DUMMY_DEVICES_PORT    | `3001`                       | コマンドを受信するためにダミーの IoT デバイスが使用するポート                                                                                                                       |
-| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | UltraLight インタラクションに使用されるランダムなセキュリティキー - これは、後のチュートリアルで使用され、デバイスと欠落している IoT Agent 間のインタラクションの整合性を保証します |
+| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | JSON インタラクションに使用されるランダムなセキュリティキー - これは、後のチュートリアルで使用され、デバイスと欠落している IoT Agent 間のインタラクションの整合性を保証します |
 
 YAML ファイルに記述されている他の `tutorial` コンテナの構成値は、このチュートリアルでは使用しません。
 
@@ -286,7 +286,7 @@ YAML ファイルに記述されている他の `tutorial` コンテナの構成
 -   IoT Agent は、(Context Broker からの)
     [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/rep/NGSI-LD/NGSI-LD/raw/master/spec/updated/generated/full_api.json)
     リクエストを、IoT デバイス自体が使用できるプロトコル (
-    [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     など) に変換するミドルウェア・コンポーネントとして機能します
 
 したがって、最初にサンプルのデバイス・プロトコルを理解し、メッセージがシステムをどのように通過して、IoT Agent
@@ -362,7 +362,7 @@ git checkout NGSI-LD
 # IoT デバイスとの通信
 
 チュートリアルを正しく実行するには、ブラウザのデバイス・モニタのページが表示されていることを確認し、ページをクリックして
-cUrl コマンドを入力する前にオーディオを有効にしてください。デバイス・モニタには、Ultralight 2.0 構文を使用してダミー・
+cUrl コマンドを入力する前にオーディオを有効にしてください。デバイス・モニタには、JSON 構文を使用してダミー・
 デバイスのアレイの現在の状態が表示されます。
 
 #### デバイス・モニタ
@@ -370,7 +370,7 @@ cUrl コマンドを入力する前にオーディオを有効にしてくださ
 デバイス・モニタは次の場所にあります: `http://localhost:3000/device/monitor`
 
 このチュートリアルでは、欠落している IoT Agent コンポーネントの役割を果たし、接続された IoT デバイスへのサウス・バウンド
-のコマンドを作成し、ストア内の環境が変化するとノース・バウンドの測定値を受信します。すべてのコマンドは、Ultralight
+のコマンドを作成し、ストア内の環境が変化するとノース・バウンドの測定値を受信します。すべてのコマンドは、JSON
 構文を使用して HTTP POST リクエストとして作成されるため、非常に簡単です。デバイス・モニタのページには、
 デバイス自身によって生成されたすべてのノース・バウンドのトラフィックが表示されているので注意が必要です。
 
@@ -402,7 +402,7 @@ curl -iX POST 'localhost:3001/iot/water001' \
 urn:ngsi-ld:Device:water001@on| on OK
 ```
 
-リクエストのボディは Ultralight 構文であり、Context Broker に保持されているデバイス (`urn:ngsi-ld:Device:water001`)
+リクエストのボディは JSON 構文であり、Context Broker に保持されているデバイス (`urn:ngsi-ld:Device:water001`)
 の `id` と デバイスで呼び出すコマンド (`on`) の名前で構成されます。
 
 レスポンスは、コマンドとアクションの結果を返します。
@@ -451,7 +451,7 @@ Tractor のダッシュボードの **FMIS System** は、アクチュエータ�
 
 ### Tractor をアクティブ化
 
-この例は、実際の IoT Agent が Ultralight コマンドを **Tractor** FMIS に送信して、アイドル状態からアクティブ状態に
+この例は、実際の IoT Agent が JSON コマンドを **Tractor** FMIS に送信して、アイドル状態からアクティブ状態に
 移行する方法を示しています。**Tractor** 自体を備えたユニットは、コマンドを待機するエンドポイント `/iot/tractor001`
 をすでに提供しています。
 
@@ -481,7 +481,7 @@ Tractor が作動すると、内部 GPS が動きを検出するかどうかに�
 
 ### Tractor を非アクティブ化
 
-この例は、実際の IoT Agent が Ultralight コマンドを **Tractor** FMIS に送信して、車両をアイドル状態に戻す方法を
+この例は、実際の IoT Agent が JSON コマンドを **Tractor** FMIS に送信して、車両をアイドル状態に戻す方法を
 示しています。**Tractor** はすでにエンドポイント `/iot/tractor001` を提供していて、コマンドを待機しています。
 
 #### 4️⃣ リクエスト:
@@ -503,7 +503,7 @@ curl -iX POST \
 urn:ngsi-ld:Device:tractor001@stop| stop OK
 ```
 
-ランプをオフにすると、GPS の位置は変わりません。IoT Agent に送信された最新の Ultralight 測定値
+ランプをオフにすると、GPS の位置は変わりません。IoT Agent に送信された最新の JSON 測定値
 (`s|IDLE|gps|13.36,52.515`) は、デバイス・モニタのページで確認できます。
 
 **Tractor** を再びオンにするには、次のコマンドを繰り返します:
@@ -537,7 +537,7 @@ urn:ngsi-ld:Device:tractor001@start| start OK
 
 ### 納屋から干し草を取り除く
 
-この例は、実際の IoT Agent が Ultralight コマンドを **Filling Station** に送信して、納屋から干し草を取り除く方法を
+この例は、実際の IoT Agent が JSON コマンドを **Filling Station** に送信して、納屋から干し草を取り除く方法を
 示しています。**Filling Station** は、すでにエンドポイント `/iot/filling001` を提供していて、コマンドを待機しています。
 
 #### 6️⃣ リクエスト:
@@ -576,7 +576,7 @@ urn:ngsi-ld:Device:filling001@remove| remove OK
 
 この例は、デバイス `humidity001` からのリクエストをシミュレートします。
 
-以前にプロビジョニングされたリソース `iot/d` へのリクエストは UltraLight 2.0 形式であり、デバイスの `humidity`
+以前にプロビジョニングされたリソース `iot/d` へのリクエストは JSON 形式であり、デバイスの `humidity`
 (湿度) を識別し、既知の API キーを渡します。
 
 #### 6️⃣ リクエスト:
@@ -591,7 +591,7 @@ curl -L -X POST \
 #### レスポンス:
 
 IoT Agent が存在し、適切なエンドポイント (`/iot/d`) でリッスンして測定を処理しない限り、記述された例は機能しません。
-ただし、この測定はすべての Ultralight 2.0 によって生成されるリクエストのクラスです。
+ただし、この測定はすべての JSON によって生成されるリクエストのクラスです。
 
 # 次のステップ
 
