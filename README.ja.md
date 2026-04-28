@@ -4,14 +4,14 @@
 [![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-[![UltraLight 2.0](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![JSON](https://img.shields.io/badge/Payload-JSON-27ae60.svg)](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 <!-- prettier-ignore -->
 
 このチュートリアルでは、IoT デバイスの概要と、制約のあるデバイス(constrained
 devices)用の
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 プロトコルの使用方法について説明します。このチュートリアルでは、一連のダミー IoT
 デバイスを紹介します。これらのデバイスは、ブラウザ内に表示され、ユーザがそれらと
 やりとりすることを可能にします。IoT デバイスを実際の IoT Agent を介して Orion
@@ -31,7 +31,7 @@ Context Broker に接続する前に、このチュートリアルで定義さ�
 <summary>詳細 <b>(クリックして拡大)</b></summary>
 
 -   [IoT デバイスとは何ですか？](#what-are-iot-devices)
--   [Ultralight 2.0 とは何ですか？](#what-is-ultralight-20)
+-   [JSON とは何ですか？](#what-is-ultralight-20)
     -   [サウス・バウンドのトラフィック (コマンド)](#southbound-traffic-commands)
         -   [HTTP POST を使用したプッシュコマンド](#push-command-using-http-post)
     -   [ノース・バウンドのトラフィック(測定)](#northbound-traffic-measurements)
@@ -108,9 +108,9 @@ IoT デバイスは、単純なものから複雑なものまで様々です。�
 
 <a name="what-is-ultralight-20"></a>
 
-# Ultralight 2.0 とは何ですか？
+# JSON とは何ですか？
 
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 は、帯域幅とデバイスのメモリ・リソースが制限されている、制約のあるデバイスや通信
 用の軽量テキストベースのプロトコルです。測定要求のペイロードは、パイプ `|` 文字
 で区切られたキーと値のペアのリストです。
@@ -128,10 +128,10 @@ t|15|k|abc
 ```
 
 2 つの属性が含まれています。1 つは、値 "15" を持つ名前 "t" の属性、もう 1 つは、
-値 "abc" を持つ名前 "k" の属性が送信されます。Ultralight 2.0 では値(Value)のタイ
+値 "abc" を持つ名前 "k" の属性が送信されます。JSON では値(Value)のタイ
 プはありません。すべてが文字列として扱われます。
 
-Ultralight 2.0 は、デバイスとサーバ間で共有する測定値とコマンドを記述するペイロ
+JSON は、デバイスとサーバ間で共有する測定値とコマンドを記述するペイロ
 ードを定義しますが、単一のトランスポート・プロトコルは指定しません。代わりに、さ
 まざまなシナリオで異なるトランスポート・プロトコル・バインディング(HTTP, MQTT お
 よび AMQP など)を使用できます。このチュートリアルでは、HTTP をトランスポート・プ
@@ -159,7 +159,7 @@ IoT Agent と IoT デバイスとの間のサウス・バウンド通信を設�
 デバイスが提供するエンドポイントに POST リクエストを送信します。POST リクエスト
 の本体にはコマンドが保持されます。
 
-Ultralight コマンドのペイロードの形式は次のとおりです :
+JSON コマンドのペイロードの形式は次のとおりです :
 
 ```
 <device name>@<command>|<param|<param>
@@ -222,7 +222,7 @@ Context Broker に戻して、エンティティの水分レベルが変化し�
 -   `k` (API Key): デバイスが登録されているサービスの API のキー
 -   `t` (timestamp): 測定のタイムスタンプ。自動の IoT Agent タイムスタンプを無効
     にします (オプション)
--   `d` (Data): Ultralight 2.0 ペイロード
+-   `d` (Data): JSON ペイロード
 
 `i` と `k` パラメータは必須です。
 
@@ -254,7 +254,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 #### デバイス・モニタ
 
 このチュートリアルでは、一連のダミーの IoT デバイスを作成しました。このデバイス
-は、最終的に Context Broker に接続されます。各デバイスの状態は、次の UltraLight
+は、最終的に Context Broker に接続されます。各デバイスの状態は、次の JSON
 デバイス・モニタの Web ページで確認できます :
 `http://localhost:3000/device/monitor`
 
@@ -266,7 +266,7 @@ HTTP POST も使用できます。再び、パスは、`/iot/d` になります�
 
 デモアプリケーションは、ダミーの IoT デバイスのセットとして機能する単一のカスタ
 ム・コンポーネントのみを使用します。すべての IoT デバイスは、HTTP 上で動作する
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 プロトコルを使用します。すべての対話は HTTP リクエストによって開始されるため、エ
 ンティティはコンテナ化され、公開されたポートから実行されます。
 
@@ -302,7 +302,7 @@ tutorial:
 -   ポート `3000` が公開されているので、ダミー IoT デバイスを表示する Web ページ
     が表示されます。
 -   ポート `3001` はチュートリアル・アクセスのためだけに公開されています。このた
-    め、cUrl または Postman が同じネットワークの一部ではなく UltraLight コマンド
+    め、cUrl または Postman が同じネットワークの一部ではなく JSON コマンド
     を作成できるようにします。
 
 `tutorial` コンテナは以下のように環境変数によってドライブされます:
@@ -314,7 +314,7 @@ tutorial:
 | IOTA_HTTP_HOST        | `iot-agent`                  | 欠落している IoT Agent のホスト名 - 後のチュートリアルで使用されます                                                                                                                          |
 | IOTA_HTTP_PORT        | `7896`                       | 欠落している IoT Agent がリッスンするポート。`7896` は、Ultra Light over HTTP の一般的なデフォルト値です                                                                                      |
 | DUMMY_DEVICES_PORT    | `3001`                       | コマンドを受信するためにダミー IoT デバイスによって使用されるポートです                                                                                                                       |
-| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | UltraLight インタラクションに使用されるランダムなセキュリティ・キー - これは、後のチュートリアルで、デバイスと欠落している IoT Agent 間のインタラクションの完全性を保証するために使用されます |
+| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | JSON インタラクションに使用されるランダムなセキュリティ・キー - これは、後のチュートリアルで、デバイスと欠落している IoT Agent 間のインタラクションの完全性を保証するために使用されます |
 
 このチュートリアルでは、YAML ファイルに記述されている他の `tutorial` コンテナの
 設定値は使用していません。
@@ -330,7 +330,7 @@ tutorial:
     う必要があります
 -   IoT Agent は 、Context Broker からの
     [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを
-    、IoT デバイス自体が使用できるプロトコル(UltraLight 2.0 など)に変換するミド
+    、IoT デバイス自体が使用できるプロトコル(JSON など)に変換するミド
     ルウェア・コンポーネントとして機能します
 
 したがって、サンプルのデバイス・プロトコルを最初に理解し、次に IoT Agent ミドル
@@ -418,7 +418,7 @@ git checkout NGSI-v2
 
 チュートリアルを正しく実行するには、ブラウザのデバイス・モニタのページが表示され
 ていることを確認し、ページをクリックして cUrl コマンドを入力する前にオーディオを
-有効にしてください。デバイス・モニタには、Ultralight 2.0 構文を使用してダミー・
+有効にしてください。デバイス・モニタには、JSON 構文を使用してダミー・
 デバイスのアレイの現在の状態が表示されます。
 
 #### デバイス・モニタ
@@ -427,7 +427,7 @@ git checkout NGSI-v2
 
 このチュートリアルでは、欠落している IoT Agent コンポーネントの役割を果たし、接
 続された IoT デバイスへのサウス・バウンドのコマンドを作成し、ストア内の環境が変
-化するとノース・バウンドの測定値を受信します。すべてのコマンドは、Ultralight 構
+化するとノース・バウンドの測定値を受信します。すべてのコマンドは、JSON 構
 文を使用して HTTP POST リクエストとして作成されるため、非常に簡単です。デバイス
 ・モニタのページには、デバイス自身によって生成されたすべてのノース・バウンドのト
 ラフィックが表示されているので注意が必要です。
@@ -461,7 +461,7 @@ curl -iX POST \
 urn:ngsi-ld:Bell:001@ring| ring OK
 ```
 
-リクエストの本体は、Ultralight の構文であり、Context Broker に保持されているデバ
+リクエストの本体は、JSON の構文であり、Context Broker に保持されているデバ
 イス(`urn:ngsi-ld:Bell:001`)の `id` と、デバイス上で呼び出すコマンド(`ring`)の名
 前で構成されています。
 
@@ -485,7 +485,7 @@ urn:ngsi-ld:Bell:001@ring| ring OK
 
 ### スマート・ランプのスイッチを入れる
 
-この例は、実際の IoT Agent が**スマート・ランプ**に Ultralight コマンドを送信し
+この例は、実際の IoT Agent が**スマート・ランプ**に JSON コマンドを送信し
 てスイッチをオンにする方法を示しています。**スマート・ランプ**は、エンドポイント
 `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
@@ -517,7 +517,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 ### スマート・ランプのスイッチを切る
 
-この例は、 実際の IoT Agent が**スマート・ランプ**に Ultralight コマンドを送信し
+この例は、 実際の IoT Agent が**スマート・ランプ**に JSON コマンドを送信し
 てスイッチをオフにする方法を示しています。**スマート・ランプ**はエンドポイント
 `/iot/lamp001` を提供していて、コマンドをリッスンしています。
 
@@ -542,7 +542,7 @@ urn:ngsi-ld:Lamp:001@off| off OK
 ```
 
 ランプが消灯(off)すると、光度は変化しません。IoT broker に送信された最新の
-Ultralight 測定値(`s|OFF|l|0`)は、デバイス・モニタのページで確認できます。
+JSON 測定値(`s|OFF|l|0`)は、デバイス・モニタのページで確認できます。
 
 スマート・ランプを再びオンにするには、次のコマンドを繰り返します :
 
@@ -574,7 +574,7 @@ urn:ngsi-ld:Lamp:001@on| on OK
 
 ### ドアのロックを解除する
 
-この例では、実際の IoT Agent が**スマート・ドア**に Ultralight コマンドを送信し
+この例では、実際の IoT Agent が**スマート・ドア**に JSON コマンドを送信し
 てドアのロックを解除する方法を示します。**スマート・ドア**はエンドポイント
 `/iot/door001` を提供していて、コマンドをリッスンしています。
 
@@ -604,7 +604,7 @@ urn:ngsi-ld:Door:001@unlock| unlock OK
 
 店内のモーション・センサはアクチュエータではなく、コマンドに応答しませんが、通過
 する顧客の数を積極的に測定します。ドアがロックされていない場合、モーション・セン
-サは動きを検出し、Ultralight 測定値を IoT broker にバックアップします。
+サは動きを検出し、JSON 測定値を IoT broker にバックアップします。
 
 **モーション・センサ**によって生成された、ノース・バウンドの HTTP リクエストは、
 デバイス・モニタのページでも表示できます。
@@ -685,7 +685,7 @@ urn:ngsi-ld:Door:001@close| close OK
 
 ### ドアをロックする
 
-この例では、実際の IoT Agent がドアをロックするために Ultralight コマンドを**ス
+この例では、実際の IoT Agent がドアをロックするために JSON コマンドを**ス
 マート・ドア**に送信する方法を示します。**スマート・ドア**はエンドポイント
 `/iot/door001` を提供していて、コマンドをリッスンしています。
 

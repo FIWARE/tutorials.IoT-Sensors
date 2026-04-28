@@ -3,13 +3,13 @@
 
 [![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.IoT-Sensors.svg)](https://opensource.org/licenses/MIT)
-[![NGSI v2](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![NGSI v2](https://img.shields.io/badge/Payload-JSON-27ae60.svg)](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-[![UltraLight 2.0](https://img.shields.io/badge/Payload-Ultralight-27ae60.svg)](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[![JSON](https://img.shields.io/badge/Payload-JSON-27ae60.svg)](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 Este tutorial es una introducción a los dispositivos IoT y al uso del protocolo
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 para dispositivos con capacidades limitadas. El tutorial presenta una serie de dispositivos ficticios que se muestran en el navegador y permiten interactuar con ellos. Se necesita una comprensión completa de todos los términos y conceptos en este tutorial antes de proceder a conectar un dispositivo IoT al Orion Context Broker por medio de un agente IoT real.
 
 A lo largo de este tutorial se usan comandos [cUrl](https://ec.haxx.se/), pero también está disponible como
@@ -33,7 +33,7 @@ A lo largo de este tutorial se usan comandos [cUrl](https://ec.haxx.se/), pero t
 <summary><strong>Details</strong></summary>
 
 -   [¿Que son dispositivos IoT?](#¿que-son-dispositivos-iot)
--   [¿Que es Ultralight 2.0?](#¿que-es-ultralight-20)
+-   [¿Que es JSON?](#¿que-es-ultralight-20)
     -   [Trafico hacia el sur (Comandos)](#trafico-hacia-el-sur-comandos)
         -   [Envío de comandos usando HTTP POST](#envio-de-comandos-usando-http-post)
     -   [Trafico hacia el norte (Medidas)](#trafico-hacia-el-norte-medidas)
@@ -84,9 +84,9 @@ Como puedes ver, la campana **Bell** es un ejemplo de un actuador puro, ya que s
 La información de estado que se mantiene dentro de cada dispositivo, como se verá posteriormente en el Context Broker se define en el siguiente diagrama:
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/entities.png)
 
-# ¿Que es Ultralight 2.0?
+# ¿Que es JSON?
 
-[UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) es un protocolo ligero basado en texto para dispositivos y comunicaciones limitados en los que el ancho de banda y los recursos de memoria del dispositivo son limitados. El mensaje de los envíos de las medidas es una lista de pares clave-valor separados por el carácter `|` o tubería.
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) es un protocolo ligero basado en texto para dispositivos y comunicaciones limitados en los que el ancho de banda y los recursos de memoria del dispositivo son limitados. El mensaje de los envíos de las medidas es una lista de pares clave-valor separados por el carácter `|` o tubería.
 
 ```
 <key>|<value>|<key>|<value>|<key>|<value> etc..
@@ -98,9 +98,9 @@ Un ejemplo sería el siguiente mensaje:
 t|15|k|abc
 ```
 
-Que contiene dos atributos, uno llamado "t" con valor "15" y otro llamado "k" con valor "abc". Los valores en UltraLight 2.0 no van tipificados (todo se trata como una cadena).
+Que contiene dos atributos, uno llamado "t" con valor "15" y otro llamado "k" con valor "abc". Los valores en JSON no van tipificados (todo se trata como una cadena).
 
-Ultralight 2.0 define una mensaje o payload describiendo medidas y comandos para compartir entre dispositivos y servidores pero, no especifica un único protocolo de transporte. En su lugar, se pueden utilizar diferentes protocolos de transporte (como HTTP, MQTT y AMQP) para diferentes escenarios. En este tutorial utilizaremos HTTP como protocolo de transporte.
+JSON define una mensaje o payload describiendo medidas y comandos para compartir entre dispositivos y servidores pero, no especifica un único protocolo de transporte. En su lugar, se pueden utilizar diferentes protocolos de transporte (como HTTP, MQTT y AMQP) para diferentes escenarios. En este tutorial utilizaremos HTTP como protocolo de transporte.
 
 ## Trafico hacia el sur (Comandos)
 
@@ -110,7 +110,7 @@ Las peticiones HTTP generadas por el Context Broker y pasadas hacia abajo hacia 
 
 Establecer la comunicación hacia el sur entre un agente IoT y los dispositivos se conoce como provisionamiento. Esto asegura que el agente IoT tenga suficiente información para poder comunicarse con cada dispositivo IoT. En otras palabras, sabe dónde enviar los comandos y qué comandos están soportados. Para enviar un comando a un dispositivo, el agente de IoT envía una petición POST a la dirección facilitada por el dispositivo. El cuerpo de la petición HTTP contiene el comando.
 
-Para el protocolo Ultralight 2.0, el mensaje sigue el siguiente formato:
+Para el protocolo JSON, el mensaje sigue el siguiente formato:
 
 ```
 <device name>@<command>|<param|<param>
@@ -146,7 +146,7 @@ Un dispositivo puede informar de nuevas medidas a un agente IoT utilizando una p
 -   `i` (device ID): Identificador de dispositivo (único para cada API Key).
 -   `k` (API Key): Es una contraseña para el servicio en el que el dispositivo está registrado.
 -   `t` (timestamp): Marca temporal de la medida. Si existe, sobrescribirá de forma automática la marca temporal del agente IoT (opcional).
--   `d` (Data): El dato o mensaje en formato Ultralight 2.0.
+-   `d` (Data): El dato o mensaje en formato JSON.
 
 Los parámetros `i` y `k` son obligatorios.
 
@@ -168,14 +168,14 @@ Tambien se puede usar una petición HTTP POST para el envío de datos. Una vez m
 
 #### Monitor de dispositivos
 
-Para el propósito de este tutorial, se han creado una serie de dispositivos IoT ficticios, asociados al BCntext Broker. El estado de cada dispositivo se puede ver en la página web del monitor de dispositivos UltraLight que se encuentra en:
+Para el propósito de este tutorial, se han creado una serie de dispositivos IoT ficticios, asociados al BCntext Broker. El estado de cada dispositivo se puede ver en la página web del monitor de dispositivos JSON que se encuentra en:
 `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Sensors/img/device-monitor.png)
 
 # Arquitectura
 
-La aplicación de demostración sólo hará uso de un único componente personalizado que actúa como un conjunto de dispositivos IoT ficticios. Cada dispositivo IoT utilizará el protocolo [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) corriendo sobre HTTP. Dado que todas las interacciones se inician con peticiones HTTP, las entidades pueden ser contenedorizadas y ejecutadas desde los puertos expuestos.
+La aplicación de demostración sólo hará uso de un único componente personalizado que actúa como un conjunto de dispositivos IoT ficticios. Cada dispositivo IoT utilizará el protocolo [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) corriendo sobre HTTP. Dado que todas las interacciones se inician con peticiones HTTP, las entidades pueden ser contenedorizadas y ejecutadas desde los puertos expuestos.
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
@@ -206,7 +206,7 @@ tutorial:
 El contenedor `tutorial` está escuchando en dos puertos:
 
 -   El puerto `3000` se expone para poder ver la página web que enseña los dispositivos IoT ficticios.
--   El puerto `3001` se expone únicamente para el acceso a los tutoriales - para que cUrl o Postman puedan hacer comandos de UltraLight sin ser parte de la misma red.
+-   El puerto `3001` se expone únicamente para el acceso a los tutoriales - para que cUrl o Postman puedan hacer comandos de JSON sin ser parte de la misma red.
 
 El contenedor `tutorial` está configurado por las variables de entorno que se muestra a continuación:
 
@@ -215,9 +215,9 @@ El contenedor `tutorial` está configurado por las variables de entorno que se m
 | DEBUG                 | `tutorial:*`                 | Flag empleado para la depuración de la aplicación |
 | WEB_APP_PORT          | `3000`                       | Puerto usado por la aplicación web que miuestra los dispositivos ficticios data |
 | IOTA_HTTP_HOST        | `iot-agent`                  | El nombre de dominio del IoT Agent - used en tutoriales posteriores          |
-| IOTA_HTTP_PORT        | `7896`                       | El puerto en el que el IoT Agent estará escuchando. `7896` es el puerto por defecto para UltraLight sobre HTTP  |
+| IOTA_HTTP_PORT        | `7896`                       | El puerto en el que el IoT Agent estará escuchando. `7896` es el puerto por defecto para JSON sobre HTTP  |
 | DUMMY_DEVICES_PORT    | `3001`                       | El puerto usado por los dispositivos ficticios para recuperar comandos  |
-| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | Clave de segurida aleatoria usado para las interacciones Ultralight - esta será usada en posteriores tutoriales para asgurar la integridad de las interacciones entre los dispositivos y el agente IoT |
+| DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | Clave de segurida aleatoria usado para las interacciones JSON - esta será usada en posteriores tutoriales para asgurar la integridad de las interacciones entre los dispositivos y el agente IoT |
 
 Los otros valores de configuración del contenedor `tutorial` descritos en el archivo YAML no se utilizan en este tutorial.
 
@@ -225,7 +225,7 @@ Al describir los mensajes que se pasan a través de una solución inteligente de
 no se utilizan en este tutorial, pero serán necesarios para completar el sistema posteriormente.
 
 -   El [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) se utiliza para guardar los datos de contexto de la        solución inteligente. Como sabes, todas las interacciones con el Context Broker deben hacerse usando [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
--   Un agente IoT actúa com intermediario o middleware convirtiendo peticiones [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) (desde el Context Broker) a otro protocolo (como por ejemplo [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)) usable por los propios dispositivos IoT.
+-   Un agente IoT actúa com intermediario o middleware convirtiendo peticiones [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) (desde el Context Broker) a otro protocolo (como por ejemplo [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)) usable por los propios dispositivos IoT.
 
 Por lo tanto, es necesario comprender primero un protocolo de dispositivo de ejemplo, y comprender cómo se pasan los mensajes a través del sistema para posteriormente comprender el propósito del middleware o Agente IoT. En este tutorial desempeñaremos el papel de un Agente IoT que envía comandos a los dispositivos y recibe mediciones de ellos.
 
@@ -280,13 +280,13 @@ Este comando también importará la información inicial del ejemplo previo de [
 
 # Comunicando con los dispositivos IoT
 
-Para seguir el tutorial correctamente, asegúrese de tener la página de monitorización del dispositivo en su navegador y haga clic en la página para habilitar el audio antes de introducir cualquier comando cUrl. El monitor de dispositivos muestra el estado actual de un conjunto de dispositivos ficticios usando la sintaxis de Ultralight 2.0
+Para seguir el tutorial correctamente, asegúrese de tener la página de monitorización del dispositivo en su navegador y haga clic en la página para habilitar el audio antes de introducir cualquier comando cUrl. El monitor de dispositivos muestra el estado actual de un conjunto de dispositivos ficticios usando la sintaxis de JSON
 
 #### Monitor de dispositivos
 
 El monitor de dispositivos se puede encontrar en la siguiente ruta: `http://localhost:3000/device/monitor`
 
-Dentro de este tutorial jugarás el papel del componente del agente IoT que falta en el sistema, haciendo comandos hacia el sur a los dispositivos IoT asociados y recibiendo mediciones hacia el norte a medida que el entorno cambia dentro de la tienda. Todos los comandos se hacen como peticiones HTTP POST usando sintaxis Ultralight 2.0 y por lo tanto son muy simples. Merece la pena echar un vistazo a la página de monitorización del dispositivo ya que muestra todo el tráfico hacia el Norte generado por los propios dispositivos.
+Dentro de este tutorial jugarás el papel del componente del agente IoT que falta en el sistema, haciendo comandos hacia el sur a los dispositivos IoT asociados y recibiendo mediciones hacia el norte a medida que el entorno cambia dentro de la tienda. Todos los comandos se hacen como peticiones HTTP POST usando sintaxis JSON y por lo tanto son muy simples. Merece la pena echar un vistazo a la página de monitorización del dispositivo ya que muestra todo el tráfico hacia el Norte generado por los propios dispositivos.
 
 ## Comandos de campana
 
@@ -309,7 +309,7 @@ curl -iX POST \
 ```
 urn:ngsi-ld:Bell:001@ring| ring OK
 ```
-El cuerpo de la petición está en sintaxis Ultralight está formado por el `id` del dispositivo (`urn:ngsi-ld:Bell:001`) tal y como está representado en el Context Broker y el nombre del comando (`ring`) a invocar en el dispositivo.
+El cuerpo de la petición está en sintaxis JSON está formado por el `id` del dispositivo (`urn:ngsi-ld:Bell:001`) tal y como está representado en el Context Broker y el nombre del comando (`ring`) a invocar en el dispositivo.
 
 La respuesta devuelve el comando y el resultado de la acción.
 
@@ -325,7 +325,7 @@ Las mediciones se enviarán al agente IoT a medida que cambie el estado y/o la l
 
 ### Encender una bombilla inteligente
 
-Este ejemplo muestra como un agente IoT real enviaría un comando Ultralight a una bombilla inteligente - **Smart Lamp** - para encenderla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
+Este ejemplo muestra como un agente IoT real enviaría un comando JSON a una bombilla inteligente - **Smart Lamp** - para encenderla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
 
 #### 2️⃣ Petición:
 
@@ -349,7 +349,7 @@ Una vez la lámpara se enciende, el nivel de luminosidad se altera dependiendo d
 
 ### Apagar una bombilla inteligente
 
-Este ejemplo muestra como un agente IoT real enviaría un comando Ultralight a una bombilla inteligente - **Smart Lamp** - para apagarla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
+Este ejemplo muestra como un agente IoT real enviaría un comando JSON a una bombilla inteligente - **Smart Lamp** - para apagarla. La bombilla inteligente tiene un endpoint, `/iot/lamp001`, donde escucha para la recepción de comandos.
 
 #### 3️⃣ Petición:
 
@@ -369,7 +369,7 @@ La respuesta devuelve el comando y el resultado de la acción.
 urn:ngsi-ld:Lamp:001@off| off OK
 ```
 
-Una vez la lámpara es apagada, el nivel de luminosidad no se altera. La última medida Ultralight tal y como fue enviada enviada al Broker (`s|OFF|l|0`) se puede ver en la página de monitor de dispositivos.
+Una vez la lámpara es apagada, el nivel de luminosidad no se altera. La última medida JSON tal y como fue enviada enviada al Broker (`s|OFF|l|0`) se puede ver en la página de monitor de dispositivos.
 
 Para encender la bombilla inteligente - **Smart Lamp** - de nuevo podemos repetir el siguiente comando:
 
@@ -395,7 +395,7 @@ Las mediciones se enviarán al agente IoT a medida que cambie el estado.
 
 ### Desbloquear una puerta inteligente
 
-Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para desbloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
+Este ejemplo enseña como un Agente IoT real enviaría un comando JSON a una puerta inteligente o **Smart Door** para desbloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
 #### 5️⃣ Petición:
 
@@ -425,7 +425,7 @@ Las peticiones enviadas hacia el norte, generadas por el sensor de movimiento, t
 
 ### Abrir una puerta
 
-Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para abrir la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
+Este ejemplo enseña como un Agente IoT real enviaría un comando JSON a una puerta inteligente o **Smart Door** para abrir la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
 #### 6️⃣ Petición:
 
@@ -451,7 +451,7 @@ Las peticiones enviadas hacia el norte, generadas por la puerta inteligente - **
 
 ### Cerrar una puerta
 
-Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para cerrar la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
+Este ejemplo enseña como un Agente IoT real enviaría un comando JSON a una puerta inteligente o **Smart Door** para cerrar la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
 #### 7️⃣  Petición:
 
@@ -477,7 +477,7 @@ Las peticiones enviadas hacia el norte, generadas por el sensor de movimiento - 
 
 ### Bloquear una puerta
 
-Este ejemplo enseña como un Agente IoT real enviaría un comando Ultralight a una puerta inteligente o **Smart Door** para bloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
+Este ejemplo enseña como un Agente IoT real enviaría un comando JSON a una puerta inteligente o **Smart Door** para bloquear la puerta. Esta tiene un endpoint en `/iot/door001` donde escucha para la recepción de comandos.
 
 
 #### 8️⃣  Petición:
