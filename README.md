@@ -14,10 +14,10 @@
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial is an introduction to IoT devices and the usage of the
-[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-Protocol for constrained devices. The tutorial introduces a series of dummy IoT devices which are displayed within the
-browser and allows a user to interact with them. A complete understanding of all the terms and concepts defined in this
-tutorial is necessary before proceeding to connect the IoT devices to the Orion Context Broker via a real IoT Agent.
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) Protocol for
+constrained devices. The tutorial introduces a series of dummy IoT devices which are displayed within the browser and
+allows a user to interact with them. A complete understanding of all the terms and concepts defined in this tutorial is
+necessary before proceeding to connect the IoT devices to the Orion Context Broker via a real IoT Agent.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
 [Postman documentation](https://fiware.github.io/tutorials.IoT-Sensors/)
@@ -118,9 +118,9 @@ t|15|k|abc
 Contains two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted. Values in
 JSON are not typed (everything is treated as a string).
 
-JSON defines a payload describing measures and commands to share between devices and servers but, does not
-specify a single transport protocol. Instead, different transport protocol bindings (such as HTTP, MQTT and AMQP) can be
-used for different scenarios. For this tutorial we will be using HTTP as a transport protocol.
+JSON defines a payload describing measures and commands to share between devices and servers but, does not specify a
+single transport protocol. Instead, different transport protocol bindings (such as HTTP, MQTT and AMQP) can be used for
+different scenarios. For this tutorial we will be using HTTP as a transport protocol.
 
 ## Southbound Traffic (Commands)
 
@@ -222,9 +222,9 @@ the context broker. The state of each device can be seen on the JSON device moni
 
 The demo application will only make use of a single custom component acting as a set of dummy IoT devices. Every IoT
 device will be using the
-[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-protocol running over HTTP. Since all interactions are initiated by HTTP requests, the entities can be containerized and
-run from exposed ports.
+[JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual) protocol
+running over HTTP. Since all interactions are initiated by HTTP requests, the entities can be containerized and run from
+exposed ports.
 
 ![](https://fiware.github.io/tutorials.IoT-Sensors/img/architecture.png)
 
@@ -255,18 +255,18 @@ tutorial:
 The `tutorial` container is listening on two ports:
 
 -   Port `3000` is exposed so we can see the web page displaying the Dummy IoT devices.
--   Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make JSON commands without
-    being part of the same network.
+-   Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make JSON commands without being
+    part of the same network.
 
 The `tutorial` container is driven by environment variables as shown:
 
-| Key                   | Value                        | Description                                                                                                                                                                        |
-| --------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DEBUG                 | `tutorial:*`                 | Debug flag used for logging                                                                                                                                                        |
-| WEB_APP_PORT          | `3000`                       | Port used by web-app which displays the dummy device data                                                                                                                          |
-| IOTA_HTTP_HOST        | `iot-agent`                  | The hostname of the missing IoT Agent - used in a later tutorial                                                                                                                   |
+| Key                   | Value                        | Description                                                                                                                                                                  |
+| --------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DEBUG                 | `tutorial:*`                 | Debug flag used for logging                                                                                                                                                  |
+| WEB_APP_PORT          | `3000`                       | Port used by web-app which displays the dummy device data                                                                                                                    |
+| IOTA_HTTP_HOST        | `iot-agent`                  | The hostname of the missing IoT Agent - used in a later tutorial                                                                                                             |
 | IOTA_HTTP_PORT        | `7896`                       | The port that the missing IoT Agent will be listening on. `7896` is a common default for JSON over HTTP                                                                      |
-| DUMMY_DEVICES_PORT    | `3001`                       | Port used by the dummy IoT devices to receive commands                                                                                                                             |
+| DUMMY_DEVICES_PORT    | `3001`                       | Port used by the dummy IoT devices to receive commands                                                                                                                       |
 | DUMMY_DEVICES_API_KEY | `4jggokgpepnvsb2uv4s40d59ov` | Random security key used for JSON interactions - this will be used in a later tutorial to ensure the integrity of interactions between the devices and the missing IoT Agent |
 
 The other `tutorial` container configuration values described in the YAML file are not used in this tutorial.
@@ -280,8 +280,8 @@ are not used in this tutorial, but will be needed to complete the system subsequ
 -   An IoT Agent acts as a middleware component converting
     [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) requests (from the context broker) into a protocol
     (such as
-    [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual))
-    usable by the IoT devices themselves.
+    [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)) usable
+    by the IoT devices themselves.
 
 It is therefore necessary to understand a sample device protocol first, and comprehend how messages are passed through
 the system to subsequently understand the purpose of the IoT Agent middleware. In this tutorial you will be playing the
@@ -356,8 +356,8 @@ The device monitor can be found at: `http://localhost:3000/device/monitor`
 
 Within this tutorial you will be playing the role of the missing IoT Agent component, making Southbound commands to the
 attached IoT devices and receiving Northbound measurements as the environment changes within the store. All the commands
-are made as HTTP POST requests using JSON syntax and therefore are very simple. It is worthwhile keeping an eye on
-the device monitor page as it shows all the Northbound traffic generated by the devices themselves.
+are made as HTTP POST requests using JSON syntax and therefore are very simple. It is worthwhile keeping an eye on the
+device monitor page as it shows all the Northbound traffic generated by the devices themselves.
 
 ## Bell Commands
 
@@ -383,8 +383,8 @@ curl -iX POST \
 urn:ngsi-ld:Bell:001@ring| ring OK
 ```
 
-The body of the request is in JSON syntax and consists of the `id` of the device (`urn:ngsi-ld:Bell:001`) as held
-in the Context Broker and the name of the command (`ring`) to invoke on the device.
+The body of the request is in JSON syntax and consists of the `id` of the device (`urn:ngsi-ld:Bell:001`) as held in the
+Context Broker and the name of the command (`ring`) to invoke on the device.
 
 The response returns the command and the result of the action.
 
@@ -401,8 +401,8 @@ Measurements will be sent to the IoT Agent as the state and/or luminosity change
 
 ### Switch on a Smart Lamp
 
-This example shows how a real IoT Agent would send an JSON command to a **Smart Lamp** to switch it on. The
-**Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
+This example shows how a real IoT Agent would send an JSON command to a **Smart Lamp** to switch it on. The **Smart
+Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
 
 #### 2️⃣ Request:
 
@@ -428,8 +428,8 @@ movement. The measurement is actively reported and requests to the IoT Broker ca
 
 ### Switch off a Smart Lamp
 
-This example shows how a real IoT Agent would send an JSON command to a **Smart Lamp** to switch it off. The
-**Smart Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
+This example shows how a real IoT Agent would send an JSON command to a **Smart Lamp** to switch it off. The **Smart
+Lamp** has already supplied an endpoint `/iot/lamp001` where it is listening for commands.
 
 #### 3️⃣ Request:
 
@@ -450,8 +450,8 @@ The response returns the command and the result of the action.
 urn:ngsi-ld:Lamp:001@off| off OK
 ```
 
-Once the lamp is switched off the luminosity level does not alter. The latest JSON measurement (`s|OFF|l|0`) as
-sent to the IoT Broker can be seen on the device monitor page.
+Once the lamp is switched off the luminosity level does not alter. The latest JSON measurement (`s|OFF|l|0`) as sent to
+the IoT Broker can be seen on the device monitor page.
 
 To turn the **Smart Lamp** back on again repeat the following command:
 
@@ -478,8 +478,8 @@ Measurements will be sent to the IoT Agent as the state changes.
 
 ### Unlock a Door
 
-This example shows how a real IoT Agent would send an JSON command to a **Smart Door** to unlock the door. The
-**Smart Door** has already supplied an endpoint `/iot/door001` where it is listening for commands.
+This example shows how a real IoT Agent would send an JSON command to a **Smart Door** to unlock the door. The **Smart
+Door** has already supplied an endpoint `/iot/door001` where it is listening for commands.
 
 #### 5️⃣ Request:
 
@@ -572,8 +572,8 @@ The Northbound HTTP requests generated by the **Motion Sensor** can also be view
 
 ### Lock a Door
 
-This example shows how a real IoT Agent would send an JSON command to a Smart Door to lock the door. The Smart
-Door has already supplied an endpoint `/iot/door001` where it is listening for commands.
+This example shows how a real IoT Agent would send an JSON command to a Smart Door to lock the door. The Smart Door has
+already supplied an endpoint `/iot/door001` where it is listening for commands.
 
 #### 8️⃣ Request:
 
