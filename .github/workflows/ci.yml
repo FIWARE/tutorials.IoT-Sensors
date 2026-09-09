@@ -30,3 +30,6 @@ jobs:
     - name: Run Script
       run: |
         ./services start && ./services stop
+    - name: Run Coraine
+      run: |
+        ./services coraine && ./services stop
